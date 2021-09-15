@@ -1,5 +1,6 @@
 node_modules
 dist
 coverage
-.ormconfig.js
+ormconfig.js
 .DS_Store
+.env
