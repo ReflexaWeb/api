@@ -14,7 +14,7 @@ export class ProductMySQL {
   @Column()
   unity!: string
 
-  @Column()
+  @Column({ default: null })
   fraction?: string
 
   @Column()
