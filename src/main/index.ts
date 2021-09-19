@@ -1,6 +1,6 @@
+import 'reflect-metadata'
 import './config/module-alias'
 
-import 'reflect-metadata'
 import { app } from '@/main/config/app'
 
 import { createConnection } from 'typeorm'
