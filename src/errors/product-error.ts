@@ -11,3 +11,5 @@ export class ProductNotFound extends Error {
     this.name = 'ProductNotFound'
   }
 }
+
+export class DataNotFound extends Error {}
