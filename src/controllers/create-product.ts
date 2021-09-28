@@ -18,7 +18,7 @@ export class CreateProductController {
     if (error instanceof ProductFound) {
       res.status(422).json({ message: error.message })
     } else if (error instanceof RequiredFieldError) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.errors })
     } else {
       res.status(500).json({ message: error })
     }

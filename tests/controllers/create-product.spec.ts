@@ -53,14 +53,14 @@ describe('CreateProductController', () => {
   })
 
   it('should return 400', async () => {
-    const mockThrownError = new RequiredFieldError('some error')
+    const mockThrownError = new RequiredFieldError(['some error'])
     productRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
     expect(productRepo.create).toHaveBeenCalledWith(productData)
     expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.message })
+    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.errors })
   })
 
   it('should return 500', async () => {

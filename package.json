@@ -8,6 +8,8 @@
     "start": "node  -r dotenv/config dist/main",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules -r dotenv/config src/main",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm t -- --watch",
     "test:staged": "npm t -- --findRelatedTests",

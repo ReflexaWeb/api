@@ -16,10 +16,12 @@ export class CreateProductUsecase {
 
   private validate (input: any): void {
     const requiredFields = ['name', 'code', 'unity', 'product_url']
+    const errors: string[] = []
     for (const field of requiredFields) {
       if (input[field] === '' || input[field] === undefined) {
-        throw new RequiredFieldError(`O campo [${field.toUpperCase()}] é obrigatório.`)
+        errors.push(`O campo [${field.toUpperCase()}] é obrigatório.`)
       }
     }
+    if (errors.length) throw new RequiredFieldError(errors)
   }
 }
