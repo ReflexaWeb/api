@@ -5,7 +5,7 @@ export const swaggerDocument = {
     version: '1.0.0',
     title: 'ReflexaWeb'
   },
-  basePath: '/api/v1',
+  schemes: ['http', 'https'],
   tags: {
     name: 'products',
     description: 'Products management'
@@ -14,28 +14,20 @@ export const swaggerDocument = {
     code: {
       name: 'code',
       in: 'path',
-      description: 'Corpo da requisição para criação de um novo produto',
+      description: 'Código do produto',
       required: true,
       type: 'string'
     }
   },
   paths: {
-    '/products': {
+    '/api/v1/products': {
       get: {
         tags: ['products'],
         summary: 'Listar produtos',
         description: 'Listar produtos',
-        requestBody: {
-          content: {
-            'application/json': {
-              schema: {
-                type: 'array',
-                items: {
-                  $ref: '#/definitions/ProductResponse'
-                }
-              }
-            }
-          }
+        type: 'array',
+        items: {
+          $ref: '#/definitions/ProductResponse'
         },
         responses: {
           200: {
@@ -75,19 +67,17 @@ export const swaggerDocument = {
         }
       }
     },
-    '/products/{code}': {
+    '/api/v1/products/{code}': {
       get: {
         tags: ['products'],
         summary: 'Listar produto por código',
         description: 'Listar produto por código',
-        requestBody: {
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/definitions/ProductResponse'
-              }
-            }
-          }
+        parameters: [{
+          $ref: '#/parameters/code'
+        }],
+        type: 'array',
+        items: {
+          $ref: '#/definitions/ProductResponse'
         },
         responses: {
           200: {
@@ -105,6 +95,9 @@ export const swaggerDocument = {
         tags: ['products'],
         summary: 'Atualizar produto',
         description: 'Atualizar produto',
+        parameters: [{
+          $ref: '#/parameters/code'
+        }],
         requestBody: {
           content: {
             'application/json': {
