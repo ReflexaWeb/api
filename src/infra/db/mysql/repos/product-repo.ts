@@ -7,8 +7,10 @@ import { getRepository } from 'typeorm'
 
 export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, ProductQuantity, GetProductsByGroupCode {
   async create (input: CreateProduct.Input): Promise<void> {
-    const product = getRepository(ProductMySQL)
-    await product.save(input)
+    console.log('input', input)
+    const productRepo = getRepository(ProductMySQL)
+    const product = new Product(input)
+    await productRepo.save(product)
   }
 
   async getAll (): Promise<Product[]> {
@@ -33,7 +35,6 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
       fraction: updatedData.fraction,
       product_url: updatedData.product_url,
       active: updatedData.active,
-      group_code: updatedData.group_code,
       updated_at: new Date()
     })
   }

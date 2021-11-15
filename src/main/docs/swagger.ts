@@ -133,11 +133,11 @@ export const swaggerDocument = {
         }
       }
     },
-    '/api/v1/products/{group_code}': {
+    '/api/v1/products/groups/{group_code}': {
       get: {
         tags: ['Products'],
-        summary: 'Listar produto por código do grupo',
-        description: 'Listar produto por código do grupo',
+        summary: 'Listar produtos por código do grupo',
+        description: 'Listar produtos por código do grupo',
         parameters: [{
           $ref: '#/parameters/group_code'
         }],

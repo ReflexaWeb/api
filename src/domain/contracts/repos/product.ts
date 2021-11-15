@@ -13,7 +13,7 @@ export interface GetAllProduct {
 }
 
 export namespace GetAllProduct {
-  export type Output = Product[]
+  export type Output = Omit<Product[], 'group_code'>
 }
 
 export interface ProductQuantity {

@@ -1,25 +1,28 @@
-import { CreateProduct, GetProductByCode } from '@/domain/contracts/repos'
+import { CreateProduct, GetGroupByCode, GetProductByCode } from '@/domain/contracts/repos'
 import { CreateProductUsecase } from '@/domain/usecases/product'
-import { ProductFound, RequiredFieldError } from '@/errors'
-import { productData } from '@/tests/domain/mocks'
+import { GroupNotFound, ProductFound, RequiredFieldError } from '@/errors'
+import { groupData, productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
 describe('CreateProductUsecase', () => {
   let productRepo: MockProxy<CreateProduct & GetProductByCode>
+  let groupRepo: MockProxy<GetGroupByCode>
   let sut: CreateProductUsecase
 
   beforeAll(() => {
     productRepo = mock()
-    productRepo.getProductByCode.mockResolvedValue(productData)
+    groupRepo = mock()
   })
 
   beforeEach(() => {
-    sut = new CreateProductUsecase(productRepo)
+    jest.resetAllMocks()
+    sut = new CreateProductUsecase(productRepo, groupRepo)
   })
 
   it('should be able to create a new product with all data', async () => {
-    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValue(undefined)
+    groupRepo.getGroupByCode.mockResolvedValue(groupData)
 
     await sut.create(productData)
 
@@ -27,7 +30,18 @@ describe('CreateProductUsecase', () => {
     expect(productRepo.create).toHaveBeenCalledTimes(1)
   })
 
+  it('should not be able to create a new product if given group code not exists', async () => {
+    productRepo.getProductByCode.mockResolvedValue(undefined)
+    groupRepo.getGroupByCode.mockResolvedValue(undefined)
+    const error = new GroupNotFound(`Grupo de código ${productData.group_code} não encontrado.`)
+
+    const promise = sut.create(productData)
+
+    await expect(promise).rejects.toThrow(error)
+  })
+
   it('should not be able to create a new product if given code already exists', async () => {
+    productRepo.getProductByCode.mockResolvedValue(productData)
     const error = new ProductFound(`Produto de código ${productData.code} encontrado.`)
     productRepo.create.mockRejectedValueOnce(error)
 

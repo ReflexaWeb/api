@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
-export class productTable1630177885179 implements MigrationInterface {
+export class createProducts1637005204639 implements MigrationInterface {
   public async up (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table(
@@ -45,8 +45,9 @@ export class productTable1630177885179 implements MigrationInterface {
               default: true
             },
             {
-              name: 'group_id',
-              type: 'numeric'
+              name: 'group_code',
+              type: 'string',
+              isNullable: false
             },
             {
               name: 'created_at',
@@ -58,13 +59,6 @@ export class productTable1630177885179 implements MigrationInterface {
               type: 'timestamp',
               isNullable: true,
               default: null
-            }
-          ],
-          foreignKeys: [
-            {
-              columnNames: ['group_id'],
-              referencedTableName: 'groups',
-              referencedColumnNames: ['id']
             }
           ]
         }

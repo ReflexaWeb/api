@@ -4,8 +4,8 @@ export class Group {
   name: string
   code: string
 
-  constructor (GroupData: GroupData) {
-    this.name = GroupData.name
-    this.code = GroupData.code
+  constructor (groupData: GroupData) {
+    this.name = groupData.name
+    this.code = groupData.code
   }
 }
