@@ -1,5 +1,5 @@
-import { CreateProductController } from '@/controllers'
-import { CreateProductUsecase } from '@/domain/usecases'
+import { CreateProductController } from '@/controllers/product'
+import { CreateProductUsecase } from '@/domain/usecases/product'
 import { ProductRepository } from '@/infra/db/mysql/repos'
 
 export const makeCreateProductController = (): CreateProductController => {

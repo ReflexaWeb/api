@@ -1,4 +1,4 @@
-import { GetProductByCodeController } from '@/controllers'
+import { GetProductByCodeController } from '@/controllers/product'
 import { GetProductByCode } from '@/domain/contracts/repos'
 import { productData } from '@/tests/domain/mocks'
 

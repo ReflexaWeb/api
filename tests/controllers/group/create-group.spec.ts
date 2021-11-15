@@ -1,19 +1,19 @@
-import { CreateProductController } from '@/controllers'
-import { CreateProduct, GetProductByCode } from '@/domain/contracts/repos'
-import { ProductFound, RequiredFieldError } from '@/errors'
-import { productData } from '@/tests/domain/mocks'
+import { CreateGroupController } from '@/controllers/group'
+import { CreateGroup, GetGroupByCode } from '@/domain/contracts/repos'
+import { GroupFound, RequiredFieldError } from '@/errors'
+import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
 
-describe('CreateProductController', () => {
-  let productRepo: MockProxy<CreateProduct & GetProductByCode>
+describe('CreateGroupController', () => {
+  let groupRepo: MockProxy<CreateGroup & GetGroupByCode>
   let req: Request
   let res: Response
-  let sut: CreateProductController
+  let sut: CreateGroupController
 
   beforeAll(() => {
-    productRepo = mock()
+    groupRepo = mock()
     req = mock()
     res = mock()
 
@@ -29,47 +29,47 @@ describe('CreateProductController', () => {
   })
 
   beforeEach(() => {
-    sut = new CreateProductController(productRepo)
+    sut = new CreateGroupController(groupRepo)
 
-    req.body = { ...productData }
+    req.body = { ...groupData }
   })
 
   it('should return 201', async () => {
     await sut.handle(req, res)
 
-    expect(productRepo.create).toHaveBeenCalledWith({ ...req.body })
+    expect(groupRepo.create).toHaveBeenCalledWith({ ...req.body })
     expect(res.sendStatus).toHaveBeenCalledWith(201)
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new ProductFound('some error')
-    productRepo.create.mockRejectedValueOnce(mockThrownError)
+    const mockThrownError = new GroupFound('some error')
+    groupRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productRepo.create).toHaveBeenCalledWith(productData)
+    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
     expect(res.status).toHaveBeenCalledWith(422)
     expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.message })
   })
 
   it('should return 400', async () => {
     const mockThrownError = new RequiredFieldError(['some error'])
-    productRepo.create.mockRejectedValueOnce(mockThrownError)
+    groupRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productRepo.create).toHaveBeenCalledWith(productData)
+    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
     expect(res.status).toHaveBeenCalledWith(400)
     expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.errors })
   })
 
   it('should return 500', async () => {
     const mockThrownError = new Error('some error')
-    productRepo.create.mockRejectedValueOnce(mockThrownError)
+    groupRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productRepo.create).toHaveBeenCalledWith(productData)
+    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith({ message: mockThrownError })
   })

@@ -1,5 +1,5 @@
 import { GetAllProduct, ProductQuantity } from '@/domain/contracts/repos'
-import { GetProductsUsecase } from '@/domain/usecases'
+import { GetProductsUsecase } from '@/domain/usecases/product'
 import { productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'

@@ -1,5 +1,5 @@
 import { CreateProduct, GetProductByCode } from '@/domain/contracts/repos'
-import { CreateProductUsecase } from '@/domain/usecases'
+import { CreateProductUsecase } from '@/domain/usecases/product'
 import { ProductFound, RequiredFieldError } from '@/errors'
 import { productData } from '@/tests/domain/mocks'
 

@@ -1,19 +1,19 @@
-import { UpdateProductController } from '@/controllers'
-import { GetProductByCode, UpdateProduct } from '@/domain/contracts/repos'
-import { productData } from '@/tests/domain/mocks'
+import { UpdateGroupController } from '@/controllers/group'
+import { GetGroupByCode, UpdateGroup } from '@/domain/contracts/repos'
+import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
-import { ProductNotFound } from '@/errors'
+import { GroupNotFound } from '@/errors'
 
-describe('UpdateProductController', () => {
-  let productUsecase: MockProxy<UpdateProduct & GetProductByCode>
+describe('UpdateGroupController', () => {
+  let groupRepo: MockProxy<UpdateGroup & GetGroupByCode>
   let req: Request
   let res: Response
-  let sut: UpdateProductController
+  let sut: UpdateGroupController
 
   beforeAll(() => {
-    productUsecase = mock()
+    groupRepo = mock()
     req = mock()
     res = mock()
 
@@ -30,37 +30,37 @@ describe('UpdateProductController', () => {
   })
 
   beforeEach(() => {
-    sut = new UpdateProductController(productUsecase)
+    sut = new UpdateGroupController(groupRepo)
 
-    req.body = { ...productData }
-    req.params = { code: productData.code }
+    req.body = { ...groupData }
+    req.params = { code: groupData.code }
   })
 
   it('should return 200', async () => {
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
     expect(res.sendStatus).toHaveBeenCalledWith(200)
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new ProductNotFound('some error')
-    productUsecase.update.mockRejectedValueOnce(mockThrownError)
+    const mockThrownError = new GroupNotFound('some error')
+    groupRepo.update.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
     expect(res.status).toHaveBeenCalledWith(422)
     expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.message })
   })
 
   it('should return 500', async () => {
     const mockThrownError = new Error('some error')
-    productUsecase.update.mockRejectedValueOnce(mockThrownError)
+    groupRepo.update.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith({ message: mockThrownError })
   })

@@ -5,3 +5,5 @@ export class RequiredFieldError {
     this.errors = errors
   }
 }
+
+export class DataNotFound extends Error {}

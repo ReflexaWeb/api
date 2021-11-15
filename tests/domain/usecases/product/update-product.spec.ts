@@ -1,5 +1,5 @@
 import { GetProductByCode, UpdateProduct } from '@/domain/contracts/repos'
-import { UpdateProductUsecase } from '@/domain/usecases'
+import { UpdateProductUsecase } from '@/domain/usecases/product'
 import { ProductNotFound } from '@/errors'
 import { productData } from '@/tests/domain/mocks'
 

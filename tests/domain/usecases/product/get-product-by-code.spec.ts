@@ -1,6 +1,6 @@
 import { productData } from '@/../tests/domain/mocks'
 import { GetProductByCode } from '@/domain/contracts/repos'
-import { GetProductByCodeUsecase } from '@/domain/usecases'
+import { GetProductByCodeUsecase } from '@/domain/usecases/product'
 import { ProductNotFound } from '@/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
