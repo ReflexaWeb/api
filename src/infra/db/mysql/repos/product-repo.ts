@@ -7,7 +7,6 @@ import { getRepository } from 'typeorm'
 
 export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, ProductQuantity, GetProductsByGroupCode {
   async create (input: CreateProduct.Input): Promise<void> {
-    console.log('input', input)
     const productRepo = getRepository(ProductMySQL)
     const product = new Product(input)
     await productRepo.save(product)
