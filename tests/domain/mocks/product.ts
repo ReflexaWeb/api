@@ -8,5 +8,5 @@ export const productData: Product = {
   fraction: 'any_fraction',
   product_url: 'any_product_url',
   active: true,
-  created_at: new Date()
+  group_code: '001'
 }

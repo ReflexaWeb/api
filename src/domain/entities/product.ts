@@ -1,4 +1,4 @@
-export type ProductData = Omit<Product, 'created_at'>
+export type ProductData = Product
 
 export class Product {
   name: string
@@ -8,7 +8,7 @@ export class Product {
   fraction?: string
   product_url: string
   active: boolean
-  created_at: Date
+  group_code: string
 
   constructor (productData: ProductData) {
     this.name = productData.name
@@ -17,7 +17,7 @@ export class Product {
     this.unity = productData.unity
     this.fraction = productData?.fraction
     this.product_url = productData.product_url
+    this.group_code = productData.group_code
     this.active = true
-    this.created_at = new Date()
   }
 }

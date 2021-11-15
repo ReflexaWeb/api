@@ -40,3 +40,11 @@ export namespace UpdateProduct {
   export type Input = ProductData
   export type Output = void | Error
 }
+
+export interface GetProductsByGroupCode {
+  getProductsByGroupCode: (code: string) => Promise<GetProductsByGroupCode.Output>
+}
+
+export namespace GetProductsByGroupCode {
+  export type Output = Product[]
+}

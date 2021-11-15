@@ -17,6 +17,13 @@ export const swaggerDocument = {
       description: 'Código do produto',
       required: true,
       type: 'string'
+    },
+    group_code: {
+      name: 'group_code',
+      in: 'path',
+      description: 'Código do grupo',
+      required: true,
+      type: 'string'
     }
   },
   paths: {
@@ -116,6 +123,31 @@ export const swaggerDocument = {
           },
           400: {
             description: 'Bad Request'
+          },
+          404: {
+            description: 'Product not found'
+          },
+          500: {
+            description: 'Internal server error'
+          }
+        }
+      }
+    },
+    '/api/v1/products/{group_code}': {
+      get: {
+        tags: ['Products'],
+        summary: 'Listar produto por código do grupo',
+        description: 'Listar produto por código do grupo',
+        parameters: [{
+          $ref: '#/parameters/group_code'
+        }],
+        type: 'array',
+        items: {
+          $ref: '#/definitions/ProductResponse'
+        },
+        responses: {
+          200: {
+            description: 'Success'
           },
           404: {
             description: 'Product not found'

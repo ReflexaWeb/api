@@ -1,11 +1,11 @@
-import { CreateProduct, GetAllProduct, GetProductByCode, ProductQuantity, UpdateProduct } from '@/domain/contracts/repos'
+import { CreateProduct, GetAllProduct, GetProductByCode, GetProductsByGroupCode, ProductQuantity, UpdateProduct } from '@/domain/contracts/repos'
 import { Product, ProductData } from '@/domain/entities'
 import { ProductNotFound } from '@/errors'
 import { ProductMySQL } from '@/infra/db/mysql/entities'
 
 import { getRepository } from 'typeorm'
 
-export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, ProductQuantity {
+export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, ProductQuantity, GetProductsByGroupCode {
   async create (input: CreateProduct.Input): Promise<void> {
     const product = getRepository(ProductMySQL)
     await product.save(input)
@@ -33,6 +33,7 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
       fraction: updatedData.fraction,
       product_url: updatedData.product_url,
       active: updatedData.active,
+      group_code: updatedData.group_code,
       updated_at: new Date()
     })
   }
@@ -40,5 +41,10 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
   async quantity (): Promise<ProductQuantity.Output> {
     const products = getRepository(ProductMySQL)
     return await products.count()
+  }
+
+  async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
+    const productRepo = getRepository(ProductMySQL)
+    return productRepo.find({ group_code })
   }
 }

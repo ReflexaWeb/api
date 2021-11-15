@@ -23,6 +23,9 @@ export class ProductMySQL {
   @Column()
   product_url!: string
 
+  @Column()
+  group_code!: string
+
   @Column({ default: true })
   active!: boolean
 

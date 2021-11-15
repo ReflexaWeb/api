@@ -45,6 +45,10 @@ export class productTable1630177885179 implements MigrationInterface {
               default: true
             },
             {
+              name: 'group_id',
+              type: 'numeric'
+            },
+            {
               name: 'created_at',
               type: 'timestamp',
               default: 'now()'
@@ -54,6 +58,13 @@ export class productTable1630177885179 implements MigrationInterface {
               type: 'timestamp',
               isNullable: true,
               default: null
+            }
+          ],
+          foreignKeys: [
+            {
+              columnNames: ['group_id'],
+              referencedTableName: 'groups',
+              referencedColumnNames: ['id']
             }
           ]
         }
