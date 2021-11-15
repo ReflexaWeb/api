@@ -40,7 +40,7 @@ export const swaggerDocument = {
           200: {
             description: 'Operation succesful',
             schema: {
-              $ref: '#/definitions/ProductPayload'
+              $ref: '#/definitions/PostProductPayload'
             }
           },
           500: {
@@ -56,7 +56,7 @@ export const swaggerDocument = {
           content: {
             'application/json': {
               schema: {
-                $ref: '#/definitions/ProductPayload'
+                $ref: '#/definitions/PostProductPayload'
               }
             }
           }
