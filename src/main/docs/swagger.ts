@@ -125,6 +125,89 @@ export const swaggerDocument = {
           }
         }
       }
+    },
+    '/api/v1/groups': {
+      get: {
+        tags: ['Groups'],
+        summary: 'Listar grupos',
+        description: 'Listar grupos',
+        type: 'array',
+        items: {
+          $ref: '#/definitions/ProductResponse'
+        },
+        responses: {
+          200: {
+            description: 'Operation succesful',
+            schema: {
+              $ref: '#/definitions/GroupResponse'
+            }
+          },
+          500: {
+            description: 'Internal server error'
+          }
+        }
+      },
+      post: {
+        tags: ['Groups'],
+        summary: 'Cadastrar novo grupo',
+        description: 'Cadastrar novo grupo',
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/definitions/GroupPayload'
+              }
+            }
+          }
+        },
+        responses: {
+          201: {
+            description: 'Created'
+          },
+          400: {
+            description: 'Bad Request'
+          },
+          422: {
+            description: 'Unprocessable Entity'
+          },
+          500: {
+            description: 'Internal server error'
+          }
+        }
+      }
+    },
+    '/api/v1/groups/{code}': {
+      put: {
+        tags: ['Groups'],
+        summary: 'Atualizar grupo',
+        description: 'Atualizar grupo',
+        parameters: [{
+          $ref: '#/parameters/code'
+        }],
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/definitions/GroupPayload'
+              }
+            }
+          }
+        },
+        responses: {
+          200: {
+            description: 'Success'
+          },
+          400: {
+            description: 'Bad Request'
+          },
+          404: {
+            description: 'Product not found'
+          },
+          500: {
+            description: 'Internal server error'
+          }
+        }
+      }
     }
   },
   definitions: {
@@ -197,6 +280,37 @@ export const swaggerDocument = {
           required: true,
           type: 'string',
           example: 'http://site.com/url-da-imagem.png'
+        }
+      ]
+    },
+    GroupPayload: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'Nome do produto',
+          example: 'Produto 1'
+        },
+        code: {
+          type: 'string',
+          description: 'Código do produto',
+          example: '001'
+        }
+      },
+      parameters: [
+        {
+          name: 'name',
+          in: 'body',
+          description: 'Nome',
+          required: true,
+          type: 'string'
+        },
+        {
+          name: 'code',
+          in: 'body',
+          description: 'Código',
+          required: true,
+          type: 'string'
         }
       ]
     },
@@ -289,6 +403,64 @@ export const swaggerDocument = {
           type: 'boolean',
           description: 'Indica se o produto está ativo ou não para aparecer no site',
           example: 'true'
+        },
+        created_at: {
+          type: 'string',
+          description: 'Data de criação do registro',
+          example: '2021-09-28T12:00:00:123Z',
+          format: 'date'
+        },
+        updated_at: {
+          type: 'string',
+          description: 'Data de atualização do registro',
+          example: '2021-09-28T12:00:00:123Z',
+          format: 'date'
+        }
+      }
+    },
+    GroupResponse: {
+      type: 'object',
+      parameters: [
+        {
+          name: 'id',
+          type: 'integer',
+          required: true
+        },
+        {
+          name: 'name',
+          type: 'string',
+          required: true
+        },
+        {
+          name: 'code',
+          type: 'string',
+          required: true
+        },
+        {
+          name: 'created_at',
+          required: true,
+          example: '2021-09-28T12:00:00:123Z',
+          format: 'date'
+        },
+        {
+          name: 'updated_at',
+          required: true,
+          example: '2021-09-28T12:00:00:123Z',
+          format: 'date'
+        }
+      ],
+      properties: {
+        id: {
+          type: 'integer',
+          description: 'ID do grupo no banco de dados'
+        },
+        name: {
+          type: 'string',
+          description: 'Nome do grupo'
+        },
+        code: {
+          type: 'string',
+          description: 'Código de identificação do grupo'
         },
         created_at: {
           type: 'string',
