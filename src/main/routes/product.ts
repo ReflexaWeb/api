@@ -1,4 +1,4 @@
-import { makeGetProductsController, makeCreateProductController, makeUpdateProductController, makeGetProductByCodeController } from '@/main/factories/controllers'
+import { makeGetProductsController, makeCreateProductController, makeUpdateProductController, makeGetProductByCodeController } from '@/main/factories/controllers/product'
 
 import { Router } from 'express'
 
