@@ -34,6 +34,7 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
       fraction: updatedData.fraction,
       product_url: updatedData.product_url,
       active: updatedData.active,
+      group_code: updatedData.group_code,
       updated_at: new Date()
     })
   }

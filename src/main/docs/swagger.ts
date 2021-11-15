@@ -112,7 +112,7 @@ export const swaggerDocument = {
           content: {
             'application/json': {
               schema: {
-                $ref: '#/definitions/ProductPayload'
+                $ref: '#/definitions/PostProductPayload'
               }
             }
           }
@@ -243,7 +243,7 @@ export const swaggerDocument = {
     }
   },
   definitions: {
-    ProductPayload: {
+    PostProductPayload: {
       type: 'object',
       properties: {
         name: {
@@ -275,6 +275,11 @@ export const swaggerDocument = {
           type: 'string',
           description: 'URL da imagem do produto',
           example: 'http://site.com/url-da-imagem.png'
+        },
+        group_code: {
+          type: 'string',
+          description: 'Código do grupo',
+          example: '001'
         }
       },
       parameters: [
