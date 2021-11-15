@@ -11,7 +11,7 @@ describe('UpdateProductUsecase', () => {
 
   beforeAll(() => {
     productRepo = mock()
-    productRepo.getByCode.mockResolvedValue(productData)
+    productRepo.getProductByCode.mockResolvedValue(productData)
   })
 
   beforeEach(() => {
@@ -26,10 +26,10 @@ describe('UpdateProductUsecase', () => {
 
   it('should return 422 if not product was found', async () => {
     const mockThrownError = new ProductNotFound(`Produto de código ${productData.code} não encontrado.`)
-    productRepo.getByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
 
     await expect(sut.update(productData.code, productData)).rejects.toThrow(mockThrownError)
 
-    expect(productRepo.getByCode).toHaveBeenCalledWith(productData.code)
+    expect(productRepo.getProductByCode).toHaveBeenCalledWith(productData.code)
   })
 })

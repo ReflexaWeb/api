@@ -11,7 +11,7 @@ describe('CreateProductUsecase', () => {
 
   beforeAll(() => {
     productRepo = mock()
-    productRepo.getByCode.mockResolvedValue(productData)
+    productRepo.getProductByCode.mockResolvedValue(productData)
   })
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('CreateProductUsecase', () => {
   })
 
   it('should be able to create a new product with all data', async () => {
-    productRepo.getByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
 
     await sut.create(productData)
 
@@ -34,6 +34,16 @@ describe('CreateProductUsecase', () => {
     const promise = sut.create(productData)
 
     await expect(promise).rejects.toThrow(error)
+  })
+
+  it('should not be able to create a new product if invalid reference were provided', async () => {
+    const errorsThatShouldBeGenerated = ['O campo [REFERENCE] é obrigatório.']
+    const error = new RequiredFieldError(errorsThatShouldBeGenerated)
+    productRepo.create.mockRejectedValueOnce(error)
+
+    const invalidProductData = { ...productData, reference: '' }
+
+    await expect(sut.create(invalidProductData)).rejects.toStrictEqual(error)
   })
 
   it('should not be able to create a new product if invalid name were provided', async () => {

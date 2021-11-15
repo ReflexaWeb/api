@@ -7,7 +7,7 @@ export const swaggerDocument = {
   },
   schemes: ['http', 'https'],
   tags: {
-    name: 'products',
+    name: 'Products',
     description: 'Products management'
   },
   parameters: {
@@ -22,7 +22,7 @@ export const swaggerDocument = {
   paths: {
     '/api/v1/products': {
       get: {
-        tags: ['products'],
+        tags: ['Products'],
         summary: 'Listar produtos',
         description: 'Listar produtos',
         type: 'array',
@@ -31,7 +31,10 @@ export const swaggerDocument = {
         },
         responses: {
           200: {
-            description: 'Operation succesful'
+            description: 'Operation succesful',
+            schema: {
+              $ref: '#/definitions/ProductPayload'
+            }
           },
           500: {
             description: 'Internal server error'
@@ -39,7 +42,7 @@ export const swaggerDocument = {
         }
       },
       post: {
-        tags: ['products'],
+        tags: ['Products'],
         summary: 'Cadastrar novo produto',
         description: 'Cadastrar novo produto',
         requestBody: {
@@ -69,7 +72,7 @@ export const swaggerDocument = {
     },
     '/api/v1/products/{code}': {
       get: {
-        tags: ['products'],
+        tags: ['Products'],
         summary: 'Listar produto por código',
         description: 'Listar produto por código',
         parameters: [{
@@ -92,7 +95,7 @@ export const swaggerDocument = {
         }
       },
       put: {
-        tags: ['products'],
+        tags: ['Products'],
         summary: 'Atualizar produto',
         description: 'Atualizar produto',
         parameters: [{
@@ -130,23 +133,33 @@ export const swaggerDocument = {
       properties: {
         name: {
           type: 'string',
-          description: 'Nome do produto'
+          description: 'Nome do produto',
+          example: 'Produto 1'
         },
         code: {
           type: 'string',
-          description: 'Código do produto'
+          description: 'Código do produto',
+          example: '001'
+        },
+        reference: {
+          type: 'string',
+          description: 'Referência do produto',
+          example: '100 PCT'
         },
         unity: {
           type: 'string',
-          description: 'Quantidade do produto (em unidades)'
+          description: 'Quantidade do produto (em unidades)',
+          example: '12'
         },
         fraction: {
           type: 'string',
-          description: 'Quantidade do produto (fracionado) - OPCIONAL'
+          description: 'Quantidade do produto (fracionado) - OPCIONAL',
+          example: '1'
         },
         product_url: {
           type: 'string',
-          description: 'URL da imagem do produto'
+          description: 'URL da imagem do produto',
+          example: 'http://site.com/url-da-imagem.png'
         }
       },
       parameters: [
@@ -201,6 +214,11 @@ export const swaggerDocument = {
           required: true
         },
         {
+          name: 'reference',
+          type: 'string',
+          required: true
+        },
+        {
           name: 'unity',
           type: 'string',
           required: true
@@ -208,6 +226,11 @@ export const swaggerDocument = {
         {
           name: 'fraction',
           type: 'string',
+          required: true
+        },
+        {
+          name: 'active',
+          type: 'boolean',
           required: true
         },
         {
@@ -242,6 +265,11 @@ export const swaggerDocument = {
           type: 'string',
           description: 'Código de identificação do produto'
         },
+        reference: {
+          type: 'string',
+          description: 'Referência do produto',
+          example: '3 unidades'
+        },
         unity: {
           type: 'string',
           description: 'Quantidade (em unidades) do produto',
@@ -256,6 +284,11 @@ export const swaggerDocument = {
           type: 'string',
           description: 'URL da imagem do produto',
           example: 'http://site.com/url-da-imagem.png'
+        },
+        active: {
+          type: 'boolean',
+          description: 'Indica se o produto está ativo ou não para aparecer no site',
+          example: 'true'
         },
         created_at: {
           type: 'string',

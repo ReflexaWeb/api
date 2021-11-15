@@ -20,7 +20,7 @@ describe('GetProductByCodeController', () => {
     res.status = jest.fn().mockReturnThis()
     res.json = jest.fn().mockReturnThis()
 
-    productRepo.getByCode.mockResolvedValue(productData)
+    productRepo.getProductByCode.mockResolvedValue(productData)
   })
 
   afterEach(() => {
@@ -35,29 +35,29 @@ describe('GetProductByCodeController', () => {
   it('should return 200 with data', async () => {
     await sut.handle(req, res)
 
-    expect(productRepo.getByCode).toHaveBeenCalledWith(req.params.code)
+    expect(productRepo.getProductByCode).toHaveBeenCalledWith(req.params.code)
     expect(res.json).toHaveBeenCalledWith(productData)
     expect(res.status).toHaveBeenCalledWith(200)
   })
 
   it('should return 400', async () => {
     const error = new DataNotFound('some error')
-    productRepo.getByCode.mockRejectedValueOnce(error)
+    productRepo.getProductByCode.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
-    expect(productRepo.getByCode).toHaveBeenCalled()
+    expect(productRepo.getProductByCode).toHaveBeenCalled()
     expect(res.status).toHaveBeenCalledWith(400)
     expect(res.json).toHaveBeenCalledWith({ message: error.message })
   })
 
   it('should return 500', async () => {
     const error = new Error('some error')
-    productRepo.getByCode.mockRejectedValueOnce(error)
+    productRepo.getProductByCode.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
-    expect(productRepo.getByCode).toHaveBeenCalled()
+    expect(productRepo.getProductByCode).toHaveBeenCalled()
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith({ message: error })
   })

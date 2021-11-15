@@ -8,7 +8,7 @@ export class GetProductByCodeController {
 
   async handle (req: Request, res: Response): Promise<void> {
     try {
-      const product = await this.productUsecase.getByCode(req.params.code)
+      const product = await this.productUsecase.getProductByCode(req.params.code)
       res.status(200).json(product)
     } catch (error) {
       this.handleError(error, res)

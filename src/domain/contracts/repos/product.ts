@@ -16,8 +16,16 @@ export namespace GetAllProduct {
   export type Output = Product[]
 }
 
+export interface ProductQuantity {
+  quantity: () => Promise<ProductQuantity.Output>
+}
+
+export namespace ProductQuantity {
+  export type Output = number
+}
+
 export interface GetProductByCode {
-  getByCode: (code: string) => Promise<GetProductByCode.Output>
+  getProductByCode: (code: string) => Promise<GetProductByCode.Output>
 }
 
 export namespace GetProductByCode {

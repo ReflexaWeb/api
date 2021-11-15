@@ -11,7 +11,7 @@ describe('GetProductByCodeUsecase', () => {
 
   beforeAll(() => {
     productRepo = mock()
-    productRepo.getByCode.mockResolvedValue(productData)
+    productRepo.getProductByCode.mockResolvedValue(productData)
   })
 
   beforeEach(() => {
@@ -19,19 +19,19 @@ describe('GetProductByCodeUsecase', () => {
   })
 
   it('should return an specific product by code', async () => {
-    await sut.getByCode('any_product_code')
+    await sut.getProductByCode('any_product_code')
 
-    expect(productRepo.getByCode).toHaveBeenCalledTimes(1)
-    expect(productRepo.getByCode).toHaveBeenCalledWith('any_product_code')
+    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductByCode).toHaveBeenCalledWith('any_product_code')
   })
 
   it('should return empty if no product were found by provided code', async () => {
     const productNotFound = new ProductNotFound('Produto de código [any_product_code] não foi encontrado.')
-    productRepo.getByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
 
-    await expect(sut.getByCode('any_product_code')).rejects.toThrow(productNotFound)
+    await expect(sut.getProductByCode('any_product_code')).rejects.toThrow(productNotFound)
 
-    expect(productRepo.getByCode).toHaveBeenCalledTimes(1)
-    expect(productRepo.getByCode).toHaveBeenCalledWith('any_product_code')
+    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductByCode).toHaveBeenCalledWith('any_product_code')
   })
 })

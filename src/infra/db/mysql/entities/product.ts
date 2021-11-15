@@ -12,6 +12,9 @@ export class ProductMySQL {
   code!: string
 
   @Column()
+  reference!: string
+
+  @Column()
   unity!: string
 
   @Column({ default: null })
@@ -19,6 +22,9 @@ export class ProductMySQL {
 
   @Column()
   product_url!: string
+
+  @Column({ default: true })
+  active!: boolean
 
   @Column({ default: () => 'now()' })
   created_at: Date
@@ -28,5 +34,6 @@ export class ProductMySQL {
 
   constructor () {
     this.created_at = new Date()
+    this.active = true
   }
 }

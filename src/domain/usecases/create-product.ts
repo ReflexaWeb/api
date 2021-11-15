@@ -6,7 +6,7 @@ export class CreateProductUsecase {
 
   async create (input: CreateProduct.Input): Promise<void> {
     this.validate(input)
-    const productExists = await this.product.getByCode(input.code)
+    const productExists = await this.product.getProductByCode(input.code)
     if (!productExists) {
       await this.product.create(input)
     } else {
@@ -15,7 +15,7 @@ export class CreateProductUsecase {
   }
 
   private validate (input: any): void {
-    const requiredFields = ['name', 'code', 'unity', 'product_url']
+    const requiredFields = ['name', 'code', 'reference', 'unity', 'product_url']
     const errors: string[] = []
     for (const field of requiredFields) {
       if (input[field] === '' || input[field] === undefined) {

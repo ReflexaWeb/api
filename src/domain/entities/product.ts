@@ -1,26 +1,23 @@
-export type ProductData = {
-  name: string
-  code: string
-  unity: string
-  fraction?: string
-  product_url: string
-  created_at: Date
-}
+export type ProductData = Omit<Product, 'created_at'>
 
 export class Product {
   name: string
   code: string
+  reference: string
   unity: string
   fraction?: string
   product_url: string
+  active: boolean
   created_at: Date
 
-  constructor (product: ProductData) {
-    this.name = product.name
-    this.code = product.code
-    this.unity = product.unity
-    this.fraction = product?.fraction
-    this.product_url = product.product_url
+  constructor (productData: ProductData) {
+    this.name = productData.name
+    this.code = productData.code
+    this.reference = productData.reference
+    this.unity = productData.unity
+    this.fraction = productData?.fraction
+    this.product_url = productData.product_url
+    this.active = true
     this.created_at = new Date()
   }
 }

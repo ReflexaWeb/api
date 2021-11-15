@@ -22,6 +22,10 @@ export class productTable1630177885179 implements MigrationInterface {
               isUnique: true
             },
             {
+              name: 'reference',
+              type: 'varchar'
+            },
+            {
               name: 'unity',
               type: 'varchar'
             },
@@ -34,6 +38,11 @@ export class productTable1630177885179 implements MigrationInterface {
             {
               name: 'product_url',
               type: 'varchar'
+            },
+            {
+              name: 'active',
+              type: 'boolean',
+              default: true
             },
             {
               name: 'created_at',
