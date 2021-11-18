@@ -11,7 +11,7 @@ export const setupRoutes = (app: Express): void => {
     .filter(file => !file.endsWith('.map'))
     .map(async file => (await import(`../routes/${file}`)).default(router))
 
-  const swaggerDocument = YAML.load(resolve(__dirname, '../docs/api-spec.yaml'))
+  const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
 
   app.use('/api/v1', router)
   app.use('/api/docs', serve, setup(swaggerDocument))
