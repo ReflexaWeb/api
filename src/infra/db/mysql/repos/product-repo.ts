@@ -1,20 +1,22 @@
-import { CreateProduct, GetAllProduct, GetProductByCode, GetProductsByGroupCode, ProductQuantity, UpdateProduct } from '@/domain/contracts/repos'
+import { CreateProduct, GetAllProduct, GetProductByCode, GetProductsByGroupCode, UpdateProduct } from '@/domain/contracts/repos'
 import { Product, ProductData } from '@/domain/entities'
 import { ProductNotFound } from '@/errors'
 import { ProductMySQL } from '@/infra/db/mysql/entities'
 
-import { getRepository } from 'typeorm'
+import { FilterQuery, getRepository } from 'typeorm'
 
-export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, ProductQuantity, GetProductsByGroupCode {
+export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, GetProductsByGroupCode {
   async create (input: CreateProduct.Input): Promise<void> {
     const productRepo = getRepository(ProductMySQL)
     const product = new Product(input)
     await productRepo.save(product)
   }
 
-  async getAll (): Promise<Product[]> {
+  async getAll (filters: GetAllProduct.Input): Promise<GetAllProduct.Output> {
     const products = getRepository(ProductMySQL)
-    return await products.find()
+    const where: FilterQuery<ProductMySQL> = {}
+    if (filters?.active) where.active = filters.active
+    return await products.find({ where })
   }
 
   async getProductByCode (code: string): Promise<GetProductByCode.Output> {
@@ -39,13 +41,13 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
     })
   }
 
-  async quantity (): Promise<ProductQuantity.Output> {
-    const products = getRepository(ProductMySQL)
-    return await products.count()
-  }
-
   async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
     const productRepo = getRepository(ProductMySQL)
-    return productRepo.find({ group_code })
+    return productRepo.find({
+      where: {
+        group_code,
+        active: true
+      }
+    })
   }
 }

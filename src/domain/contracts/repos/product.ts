@@ -9,19 +9,14 @@ export namespace CreateProduct {
 }
 
 export interface GetAllProduct {
-  getAll: () => Promise<GetAllProduct.Output>
+  getAll: (input: GetAllProduct.Input) => Promise<GetAllProduct.Output>
 }
 
 export namespace GetAllProduct {
-  export type Output = Omit<Product[], 'group_code'>
-}
-
-export interface ProductQuantity {
-  quantity: () => Promise<ProductQuantity.Output>
-}
-
-export namespace ProductQuantity {
-  export type Output = number
+  export type Input = {
+    active?: boolean
+  }
+  export type Output = Product[]
 }
 
 export interface GetProductByCode {

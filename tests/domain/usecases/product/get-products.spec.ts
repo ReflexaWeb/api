@@ -1,11 +1,11 @@
-import { GetAllProduct, ProductQuantity } from '@/domain/contracts/repos'
+import { GetAllProduct } from '@/domain/contracts/repos'
 import { GetProductsUsecase } from '@/domain/usecases/product'
-import { productData } from '@/tests/domain/mocks'
+import { productDataCollection } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
 describe('GetProductsUsecase', () => {
-  let productRepo: MockProxy<GetAllProduct & ProductQuantity>
+  let productRepo: MockProxy<GetAllProduct>
   let sut: GetProductsUsecase
 
   beforeAll(() => {
@@ -17,34 +17,34 @@ describe('GetProductsUsecase', () => {
   })
 
   it('should be able return all products', async () => {
-    productRepo.getAll.mockResolvedValue([productData])
+    productRepo.getAll.mockResolvedValue(productDataCollection)
 
     await sut.getAll()
 
     expect(productRepo.getAll).toHaveBeenCalled()
   })
 
-  it('should be able return all products cached', async () => {
-    productRepo.getAll.mockResolvedValue([])
-    productRepo.quantity.mockResolvedValue(0)
+  it('should be able return all active products', async () => {
+    productRepo.getAll.mockResolvedValue([productDataCollection[0]])
+    const filters = { active: true }
 
-    await sut.getAll()
+    const activeProducts = await sut.getAll(filters)
 
-    expect(productRepo.getAll).toHaveBeenCalledTimes(1)
+    expect(activeProducts).toEqual([
+      { ...productDataCollection[0] }
+    ])
+    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
   })
 
-  it('should be able return revalidated products cached', async () => {
-    productRepo.getAll.mockResolvedValue([])
-    productRepo.quantity.mockResolvedValue(0)
+  it('should be able return all inactive products', async () => {
+    productRepo.getAll.mockResolvedValue([productDataCollection[1]])
+    const filters = { active: false }
 
-    const firstCall = await sut.getAll()
-    expect(firstCall).toEqual([])
+    const inactiveProducts = await sut.getAll(filters)
 
-    productRepo.getAll.mockResolvedValue([productData])
-    productRepo.quantity.mockResolvedValue(1)
-    const secondCall = await sut.getAll()
-
-    expect(secondCall).toEqual([{ ...productData }])
-    expect(productRepo.getAll).toHaveBeenCalledTimes(2)
+    expect(inactiveProducts).toEqual([
+      { ...productDataCollection[1] }
+    ])
+    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
   })
 })

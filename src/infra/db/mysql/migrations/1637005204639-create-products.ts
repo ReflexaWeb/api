@@ -46,7 +46,7 @@ export class createProducts1637005204639 implements MigrationInterface {
             },
             {
               name: 'group_code',
-              type: 'string',
+              type: 'varchar',
               isNullable: false
             },
             {

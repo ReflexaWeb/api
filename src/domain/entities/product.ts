@@ -15,7 +15,7 @@ export class Product {
     this.code = productData.code
     this.reference = productData.reference
     this.unity = productData.unity
-    this.fraction = productData?.fraction
+    this.fraction = productData.fraction
     this.product_url = productData.product_url
     this.group_code = productData.group_code
     this.active = true

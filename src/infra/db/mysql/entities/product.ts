@@ -26,7 +26,7 @@ export class ProductMySQL {
   @Column()
   group_code!: string
 
-  @Column({ default: true })
+  @Column()
   active!: boolean
 
   @Column({ default: () => 'now()' })
