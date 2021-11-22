@@ -3,7 +3,7 @@ import { Product, ProductData } from '@/domain/entities'
 import { ProductNotFound } from '@/errors'
 import { ProductMySQL } from '@/infra/db/mysql/entities'
 
-import { FilterQuery, getRepository } from 'typeorm'
+import { FilterQuery, getRepository, Like } from 'typeorm'
 
 export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, GetProductsByGroupCode {
   async create (input: CreateProduct.Input): Promise<void> {
@@ -12,10 +12,11 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
     await productRepo.save(product)
   }
 
-  async getAll (filters: GetAllProduct.Input): Promise<GetAllProduct.Output> {
+  async getAll (filters?: GetAllProduct.Input): Promise<GetAllProduct.Output> {
     const products = getRepository(ProductMySQL)
     const where: FilterQuery<ProductMySQL> = {}
     if (filters?.active) where.active = filters.active
+    if (filters?.name) where.name = Like(`%${filters.name}%`)
     return await products.find({ where })
   }
 

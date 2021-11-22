@@ -47,4 +47,16 @@ describe('GetProductsUsecase', () => {
     ])
     expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
   })
+
+  it('should be able return product by name', async () => {
+    productRepo.getAll.mockResolvedValue([productDataCollection[0]])
+    const filters = { name: 'any_name' }
+
+    const product = await sut.getAll(filters)
+
+    expect(product).toEqual([
+      { ...productDataCollection[0] }
+    ])
+    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
+  })
 })

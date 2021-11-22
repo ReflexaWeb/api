@@ -15,6 +15,7 @@ export interface GetAllProduct {
 export namespace GetAllProduct {
   export type Input = {
     active?: boolean
+    name?: string
   }
   export type Output = Product[]
 }

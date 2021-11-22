@@ -33,6 +33,11 @@ parameters:
     enum:
       - 0
       - 1
+  name:
+    name: "name"
+    description: "Nome do produto"
+    in: "query"
+    type: string
 paths:
   /v1/groups:
     post:
@@ -133,6 +138,7 @@ paths:
         - "application/json"
       parameters:
         - $ref: "#/parameters/active"
+        - $ref: "#/parameters/name"
       responses:
         200:
           description: Successful operation
