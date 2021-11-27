@@ -38,6 +38,16 @@ parameters:
     description: "Nome do produto"
     in: "query"
     type: string
+  page:
+    name: "page"
+    description: "Página atual"
+    in: "query"
+    type: number
+  per_page:
+    name: "per_page"
+    description: "Quantidade de resultados por página (padrão: 15 registros)"
+    in: "query"
+    type: number
 paths:
   /v1/groups:
     post:
@@ -139,6 +149,8 @@ paths:
       parameters:
         - $ref: "#/parameters/active"
         - $ref: "#/parameters/name"
+        - $ref: "#/parameters/page"
+        - $ref: "#/parameters/per_page"
       responses:
         200:
           description: Successful operation

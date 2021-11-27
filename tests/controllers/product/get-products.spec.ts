@@ -1,6 +1,6 @@
 import { GetProductsController } from '@/controllers/product'
 import { GetAllProduct } from '@/domain/contracts/repos'
-import { productData } from '@/tests/domain/mocks'
+import { mockProductsResponse } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
@@ -19,7 +19,7 @@ describe('GetProductsController', () => {
     res.status = jest.fn().mockReturnThis()
     res.json = jest.fn().mockReturnThis()
 
-    productRepo.getAll.mockResolvedValue([productData])
+    productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
   })
 
   afterEach(() => {
@@ -33,28 +33,32 @@ describe('GetProductsController', () => {
   it('should return 200 with data', async () => {
     await sut.handle(req, res)
 
-    expect(productRepo.getAll).toHaveBeenCalled()
-    expect(res.json).toHaveBeenCalledWith([productData])
+    expect(productRepo.getAllProducts).toHaveBeenCalled()
+    expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponse)
     expect(res.status).toHaveBeenCalledWith(200)
   })
 
   it('should return 200 without data', async () => {
-    productRepo.getAll.mockResolvedValueOnce([])
+    const mockProductsResponseWithEmtpyContent = {
+      ...mockProductsResponse,
+      data: []
+    }
+    productRepo.getAllProducts.mockResolvedValueOnce(mockProductsResponseWithEmtpyContent)
 
     await sut.handle(req, res)
 
-    expect(productRepo.getAll).toHaveBeenCalled()
-    expect(res.json).toHaveBeenCalledWith([])
+    expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
+    expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponseWithEmtpyContent)
     expect(res.status).toHaveBeenCalledWith(200)
   })
 
   it('should return 500', async () => {
     const error = new Error('some error')
-    productRepo.getAll.mockRejectedValueOnce(error)
+    productRepo.getAllProducts.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
-    expect(productRepo.getAll).toHaveBeenCalled()
+    expect(productRepo.getAllProducts).toHaveBeenCalled()
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith({ message: error })
   })

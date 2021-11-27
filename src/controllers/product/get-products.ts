@@ -6,7 +6,7 @@ export class GetProductsController {
 
   async handle (req: Request, res: Response): Promise<void> {
     try {
-      const products = await this.productUsecase.getAll(req.query)
+      const products = await this.productUsecase.getAllProducts(req.query)
       res.status(200).json(products)
     } catch (error) {
       res.status(500).json({ message: error })

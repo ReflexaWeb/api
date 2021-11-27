@@ -1,5 +1,16 @@
 import { Product, ProductData } from '@/domain/entities'
 
+export type ProductsPaginationResponse = {
+  from: number
+  to: number
+  per_page: number
+  total: number
+  current_page: number
+  prev_page?: number | null
+  next_page?: number | null
+  data: Product[]
+}
+
 export interface CreateProduct {
   create: (input: CreateProduct.Input) => Promise<void>
 }
@@ -9,15 +20,15 @@ export namespace CreateProduct {
 }
 
 export interface GetAllProduct {
-  getAll: (input: GetAllProduct.Input) => Promise<GetAllProduct.Output>
+  getAllProducts: (filters: GetAllProduct.Filters) => Promise<GetAllProduct.Output>
 }
 
 export namespace GetAllProduct {
-  export type Input = {
+  export type Filters = {
     active?: boolean
     name?: string
   }
-  export type Output = Product[]
+  export type Output = ProductsPaginationResponse
 }
 
 export interface GetProductByCode {

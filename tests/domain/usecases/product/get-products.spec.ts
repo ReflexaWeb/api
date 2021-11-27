@@ -1,6 +1,6 @@
 import { GetAllProduct } from '@/domain/contracts/repos'
 import { GetProductsUsecase } from '@/domain/usecases/product'
-import { productDataCollection } from '@/tests/domain/mocks'
+import { mockProductsResponse } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
@@ -17,46 +17,20 @@ describe('GetProductsUsecase', () => {
   })
 
   it('should be able return all products', async () => {
-    productRepo.getAll.mockResolvedValue(productDataCollection)
+    productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
 
-    await sut.getAll()
+    await sut.getAllProducts()
 
-    expect(productRepo.getAll).toHaveBeenCalled()
+    expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
   })
 
-  it('should be able return all active products', async () => {
-    productRepo.getAll.mockResolvedValue([productDataCollection[0]])
-    const filters = { active: true }
+  it('should be able return products with filters', async () => {
+    productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
+    const filters = { active: true, name: 'any_name' }
 
-    const activeProducts = await sut.getAll(filters)
+    const response = await sut.getAllProducts(filters)
 
-    expect(activeProducts).toEqual([
-      { ...productDataCollection[0] }
-    ])
-    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
-  })
-
-  it('should be able return all inactive products', async () => {
-    productRepo.getAll.mockResolvedValue([productDataCollection[1]])
-    const filters = { active: false }
-
-    const inactiveProducts = await sut.getAll(filters)
-
-    expect(inactiveProducts).toEqual([
-      { ...productDataCollection[1] }
-    ])
-    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
-  })
-
-  it('should be able return product by name', async () => {
-    productRepo.getAll.mockResolvedValue([productDataCollection[0]])
-    const filters = { name: 'any_name' }
-
-    const product = await sut.getAll(filters)
-
-    expect(product).toEqual([
-      { ...productDataCollection[0] }
-    ])
-    expect(productRepo.getAll).toHaveBeenNthCalledWith(1, filters)
+    expect(response).toStrictEqual(mockProductsResponse)
+    expect(productRepo.getAllProducts).toHaveBeenNthCalledWith(1, filters)
   })
 })
