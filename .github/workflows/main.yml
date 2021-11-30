@@ -47,4 +47,4 @@ jobs:
             cd ~/app/reflexa-api
             npm i
             ./node_modules/.bin/typeorm migration:run
-            pm2 restart reflexa-api
+            pm2 restart api
