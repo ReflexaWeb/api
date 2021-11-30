@@ -6,5 +6,5 @@ import { app } from '@/main/config/app'
 import { createConnection } from 'typeorm'
 
 createConnection()
-  .then(() => app.listen(3000, () => console.log('Server running at http://localhost:3000')))
+  .then(() => app.listen(3333, () => console.log('Server running at http://localhost:3333')))
   .catch(console.error)
