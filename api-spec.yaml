@@ -3,7 +3,7 @@ info:
   description: "ReflexaWeb - API"
   version: "1.0.0"
   title: "ReflexaWeb"
-basePath: "/api"
+basePath: "/v1"
 tags:
   - name: "Products"
     description: "Products management"
@@ -49,7 +49,7 @@ parameters:
     in: "query"
     type: number
 paths:
-  /v1/groups:
+  /groups:
     post:
       tags:
         - "Groups"
@@ -91,7 +91,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-  /v1/groups/{group_code}:
+  /groups/{group_code}:
     put:
       tags:
         - "Groups"
@@ -115,7 +115,7 @@ paths:
           description: Not Found
         500:
           description: Internal server error
-  /v1/products:
+  /products:
     post:
       tags:
         - "Products"
@@ -162,7 +162,7 @@ paths:
           description: "Internal Server Error"
           schema:
             $ref: "#/definitions/Error"
-  /v1/products/{code}:
+  /products/{code}:
     get:
       tags:
         - "Products"
@@ -205,7 +205,7 @@ paths:
           description: Not Found
         500:
           description: Internal server error
-  /v1/products/groups/{group_code}:
+  /products/groups/{group_code}:
     get:
       tags:
         - "Products"
