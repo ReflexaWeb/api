@@ -33,9 +33,9 @@ describe('GetGroupsController', () => {
   it('should return 200 with data', async () => {
     await sut.handle(req, res)
 
-    expect(groupRepo.getAllGroups).toHaveBeenCalled()
-    expect(res.json).toHaveBeenCalledWith([productData])
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(groupRepo.getAllGroups).toHaveBeenCalledTimes(1)
+    expect(res.json).toHaveBeenNthCalledWith(1, [productData])
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 200 without data', async () => {
@@ -43,9 +43,9 @@ describe('GetGroupsController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.getAllGroups).toHaveBeenCalled()
-    expect(res.json).toHaveBeenCalledWith([])
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(groupRepo.getAllGroups).toHaveBeenCalledTimes(1)
+    expect(res.json).toHaveBeenNthCalledWith(1, [])
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 500', async () => {
@@ -54,8 +54,8 @@ describe('GetGroupsController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.getAllGroups).toHaveBeenCalled()
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ message: error })
+    expect(groupRepo.getAllGroups).toHaveBeenCalledTimes(1)
+    expect(res.status).toHaveBeenNthCalledWith(1, 500)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })
 })

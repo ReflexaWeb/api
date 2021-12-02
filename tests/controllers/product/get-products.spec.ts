@@ -18,6 +18,7 @@ describe('GetProductsController', () => {
 
     res.status = jest.fn().mockReturnThis()
     res.json = jest.fn().mockReturnThis()
+    req.query = {}
 
     productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
   })
@@ -33,7 +34,17 @@ describe('GetProductsController', () => {
   it('should return 200 with data', async () => {
     await sut.handle(req, res)
 
-    expect(productRepo.getAllProducts).toHaveBeenCalled()
+    expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
+    expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponse)
+    expect(res.status).toHaveBeenCalledWith(200)
+  })
+
+  it('should return 200 with data and filters', async () => {
+    req.query = { active: String(1), name: 'any_name', group_code: '001' }
+
+    await sut.handle(req, res)
+
+    expect(productRepo.getAllProducts).toHaveBeenNthCalledWith(1, req.query)
     expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponse)
     expect(res.status).toHaveBeenCalledWith(200)
   })
@@ -58,7 +69,7 @@ describe('GetProductsController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getAllProducts).toHaveBeenCalled()
+    expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
     expect(res.status).toHaveBeenCalledWith(500)
     expect(res.json).toHaveBeenCalledWith({ message: error })
   })

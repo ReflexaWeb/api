@@ -21,9 +21,14 @@ parameters:
     type: string
   group_code:
     name: "group_code"
-    description: "Código do grupo"
+    description: "Código do grupo (obrigatório)"
     required: true
     in: "path"
+    type: string
+  group_code_not_required:
+    name: "group_code"
+    description: "Código do grupo (opcional)"
+    in: "query"
     type: string
   active:
     name: "active"
@@ -149,6 +154,7 @@ paths:
       parameters:
         - $ref: "#/parameters/active"
         - $ref: "#/parameters/name"
+        - $ref: "#/parameters/group_code_not_required"
         - $ref: "#/parameters/page"
         - $ref: "#/parameters/per_page"
       responses:
@@ -255,7 +261,7 @@ definitions:
       fraction:
         type: string
         example: '1'
-        description: 'Quantidade do produto se for fracionado'
+        description: 'Quantidade do produto (se fracionado)'
       product_url:
         type: string
         example: 'https://site.com/url-image.png'

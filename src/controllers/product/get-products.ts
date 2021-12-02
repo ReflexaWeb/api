@@ -1,4 +1,5 @@
 import { GetAllProduct } from '@/domain/contracts/repos'
+
 import { Request, Response } from 'express'
 
 export class GetProductsController {

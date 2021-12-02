@@ -35,9 +35,9 @@ describe('GetProductByGroupCodeController', () => {
   it('should return 200 with data', async () => {
     await sut.handle(req, res)
 
-    expect(productRepo.getProductsByGroupCode).toHaveBeenCalledWith(req.params.group_code)
-    expect(res.json).toHaveBeenCalledWith([productData])
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, req.params.group_code)
+    expect(res.json).toHaveBeenNthCalledWith(1, [productData])
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 400', async () => {
@@ -46,9 +46,9 @@ describe('GetProductByGroupCodeController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductsByGroupCode).toHaveBeenCalled()
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({ message: error.message })
+    expect(productRepo.getProductsByGroupCode).toHaveBeenCalledTimes(1)
+    expect(res.status).toHaveBeenNthCalledWith(1, 400)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
 
   it('should return 500', async () => {
@@ -57,8 +57,8 @@ describe('GetProductByGroupCodeController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductsByGroupCode).toHaveBeenCalled()
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ message: error })
+    expect(productRepo.getProductsByGroupCode).toHaveBeenCalledTimes(1)
+    expect(res.status).toHaveBeenNthCalledWith(1, 500)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })
 })

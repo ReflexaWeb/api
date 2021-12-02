@@ -24,21 +24,19 @@ describe('CreateGroupController', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-
     req.body = {}
   })
 
   beforeEach(() => {
     sut = new CreateGroupController(groupRepo)
-
     req.body = { ...groupData }
   })
 
   it('should return 201', async () => {
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenCalledWith({ ...req.body })
-    expect(res.sendStatus).toHaveBeenCalledWith(201)
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, { ...req.body })
+    expect(res.sendStatus).toHaveBeenNthCalledWith(1, 201)
   })
 
   it('should return 422', async () => {
@@ -47,9 +45,9 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
-    expect(res.status).toHaveBeenCalledWith(422)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.message })
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(res.status).toHaveBeenNthCalledWith(1, 422)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
   })
 
   it('should return 400', async () => {
@@ -58,9 +56,9 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
-    expect(res.status).toHaveBeenCalledWith(400)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.errors })
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(res.status).toHaveBeenNthCalledWith(1, 400)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.errors })
   })
 
   it('should return 500', async () => {
@@ -69,8 +67,8 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenCalledWith(groupData)
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError })
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(res.status).toHaveBeenNthCalledWith(1, 500)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
   })
 })

@@ -58,6 +58,12 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
       )
     }
 
+    if (filters?.group_code) {
+      queryBuilder.andWhere(
+        'products.group_code = :group_code', { group_code: filters.group_code }
+      )
+    }
+
     if (filters?.name) {
       queryBuilder.andWhere('products.name LIKE :name', { name: `%${filters.name}%` })
     }

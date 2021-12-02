@@ -39,8 +39,8 @@ describe('UpdateProductController', () => {
   it('should return 200', async () => {
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
-    expect(res.sendStatus).toHaveBeenCalledWith(200)
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(res.sendStatus).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 422', async () => {
@@ -49,9 +49,9 @@ describe('UpdateProductController', () => {
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
-    expect(res.status).toHaveBeenCalledWith(422)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError.message })
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(res.status).toHaveBeenNthCalledWith(1, 422)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
   })
 
   it('should return 500', async () => {
@@ -60,8 +60,8 @@ describe('UpdateProductController', () => {
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenCalledWith(req.params.code, { ...req.body })
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ message: mockThrownError })
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(res.status).toHaveBeenNthCalledWith(1, 500)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
   })
 })
