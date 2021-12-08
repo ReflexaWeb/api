@@ -36,7 +36,7 @@ describe('GetProductsController', () => {
 
     expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
     expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponse)
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 200 with data and filters', async () => {
@@ -46,7 +46,7 @@ describe('GetProductsController', () => {
 
     expect(productRepo.getAllProducts).toHaveBeenNthCalledWith(1, req.query)
     expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponse)
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 200 without data', async () => {
@@ -60,7 +60,7 @@ describe('GetProductsController', () => {
 
     expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
     expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponseWithEmtpyContent)
-    expect(res.status).toHaveBeenCalledWith(200)
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 500', async () => {
@@ -70,7 +70,7 @@ describe('GetProductsController', () => {
     await sut.handle(req, res)
 
     expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
-    expect(res.status).toHaveBeenCalledWith(500)
-    expect(res.json).toHaveBeenCalledWith({ message: error })
+    expect(res.status).toHaveBeenNthCalledWith(1, 500)
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })
 })

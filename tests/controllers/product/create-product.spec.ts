@@ -1,6 +1,6 @@
 import { CreateProductController } from '@/controllers/product'
 import { CreateProduct, GetProductByCode } from '@/domain/contracts/repos'
-import { ProductFound, RequiredFieldError } from '@/errors'
+import { RequestError, RequiredFieldError } from '@/errors'
 import { productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -40,7 +40,7 @@ describe('CreateProductController', () => {
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new ProductFound('some error')
+    const mockThrownError = new RequestError('some error')
     productRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)

@@ -4,7 +4,7 @@ import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
-import { GroupNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 describe('UpdateGroupController', () => {
   let groupRepo: MockProxy<UpdateGroup & GetGroupByCode>
@@ -39,17 +39,17 @@ describe('UpdateGroupController', () => {
   it('should return 200', async () => {
     await sut.handle(req, res)
 
-    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.sendStatus).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new GroupNotFound('some error')
+    const mockThrownError = new RequestError('some error')
     groupRepo.update.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 422)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
   })
@@ -60,7 +60,7 @@ describe('UpdateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
   })

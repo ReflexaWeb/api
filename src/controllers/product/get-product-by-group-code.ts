@@ -1,5 +1,5 @@
 import { GetProductsByGroupCode } from '@/domain/contracts/repos'
-import { DataNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 import { Request, Response } from 'express'
 
@@ -16,7 +16,7 @@ export class GetProductsByGroupCodeController {
   }
 
   private handleError (error: any, res: Response): void {
-    if (error instanceof DataNotFound) {
+    if (error instanceof RequestError) {
       res.status(400).json({ message: error.message })
     } else {
       res.status(500).json({ message: error })

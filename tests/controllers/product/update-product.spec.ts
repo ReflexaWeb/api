@@ -4,7 +4,7 @@ import { productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
-import { ProductNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 describe('UpdateProductController', () => {
   let productUsecase: MockProxy<UpdateProduct & GetProductByCode>
@@ -39,17 +39,17 @@ describe('UpdateProductController', () => {
   it('should return 200', async () => {
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.sendStatus).toHaveBeenNthCalledWith(1, 200)
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new ProductNotFound('some error')
+    const mockThrownError = new RequestError('some error')
     productUsecase.update.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 422)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
   })
@@ -60,7 +60,7 @@ describe('UpdateProductController', () => {
 
     await sut.handle(req, res)
 
-    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, { ...req.body })
+    expect(productUsecase.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
   })

@@ -1,6 +1,6 @@
 import { GetGroupByCode, UpdateGroup } from '@/domain/contracts/repos'
 import { UpdateGroupUsecase } from '@/domain/usecases/group'
-import { GroupNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -25,7 +25,7 @@ describe('UpdateGroupUsecase', () => {
   })
 
   it('should return 422 if not group was found', async () => {
-    const mockThrownError = new GroupNotFound(`Grupo de código ${groupData.code} não encontrado.`)
+    const mockThrownError = new RequestError(`Grupo de código ${groupData.code} não encontrado.`)
     groupRepo.getGroupByCode.mockResolvedValueOnce(undefined)
 
     await expect(sut.update(groupData.code, groupData)).rejects.toThrow(mockThrownError)

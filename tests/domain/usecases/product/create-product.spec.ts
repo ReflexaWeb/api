@@ -1,6 +1,6 @@
 import { CreateProduct, GetGroupByCode, GetProductByCode } from '@/domain/contracts/repos'
 import { CreateProductUsecase } from '@/domain/usecases/product'
-import { GroupNotFound, ProductFound, RequiredFieldError } from '@/errors'
+import { RequestError, RequiredFieldError } from '@/errors'
 import { groupData, productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -26,14 +26,13 @@ describe('CreateProductUsecase', () => {
 
     await sut.create(productData)
 
-    expect(productRepo.create).toHaveBeenCalledWith({ ...productData })
-    expect(productRepo.create).toHaveBeenCalledTimes(1)
+    expect(productRepo.create).toHaveBeenNthCalledWith(1, productData)
   })
 
   it('should not be able to create a new product if given group code not exists', async () => {
     productRepo.getProductByCode.mockResolvedValue(undefined)
     groupRepo.getGroupByCode.mockResolvedValue(undefined)
-    const error = new GroupNotFound(`Grupo de código ${productData.group_code} não encontrado.`)
+    const error = new RequestError(`Grupo de código ${productData.group_code} não encontrado.`)
 
     const promise = sut.create(productData)
 
@@ -42,7 +41,7 @@ describe('CreateProductUsecase', () => {
 
   it('should not be able to create a new product if given code already exists', async () => {
     productRepo.getProductByCode.mockResolvedValue(productData)
-    const error = new ProductFound(`Produto de código ${productData.code} encontrado.`)
+    const error = new RequestError(`Produto de código ${productData.code} encontrado.`)
     productRepo.create.mockRejectedValueOnce(error)
 
     const promise = sut.create(productData)

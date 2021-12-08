@@ -4,7 +4,7 @@ import { productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
-import { DataNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 describe('GetProductByGroupCodeController', () => {
   let productRepo: MockProxy<GetProductsByGroupCode>
@@ -41,7 +41,7 @@ describe('GetProductByGroupCodeController', () => {
   })
 
   it('should return 400', async () => {
-    const error = new DataNotFound('some error')
+    const error = new RequestError('some error')
     productRepo.getProductsByGroupCode.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)

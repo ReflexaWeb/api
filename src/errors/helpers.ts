@@ -6,4 +6,4 @@ export class RequiredFieldError {
   }
 }
 
-export class DataNotFound extends Error {}
+export class RequestError extends Error {}

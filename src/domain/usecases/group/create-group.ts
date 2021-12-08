@@ -1,16 +1,18 @@
 import { CreateGroup, GetGroupByCode } from '@/domain/contracts/repos'
-import { GroupFound, RequiredFieldError } from '@/errors'
+import { Group } from '@/domain/entities'
+import { RequestError, RequiredFieldError } from '@/errors'
 
 export class CreateGroupUsecase {
-  constructor (private readonly group: CreateGroup & GetGroupByCode) {}
+  constructor (private readonly groupRepositoru: CreateGroup & GetGroupByCode) {}
 
   async create (input: CreateGroup.Input): Promise<void> {
     this.validate(input)
-    const GroupExists = await this.group.getGroupByCode(input.code)
+    const GroupExists = await this.groupRepositoru.getGroupByCode(input.code)
     if (!GroupExists) {
-      await this.group.create(input)
+      const group = new Group(input)
+      await this.groupRepositoru.create(group)
     } else {
-      throw new GroupFound(`Grupo de código ${input.code} encontrado.`)
+      throw new RequestError(`Grupo de código ${input.code} encontrado.`)
     }
   }
 

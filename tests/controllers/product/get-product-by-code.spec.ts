@@ -1,10 +1,10 @@
 import { GetProductByCodeController } from '@/controllers/product'
 import { GetProductByCode } from '@/domain/contracts/repos'
 import { productData } from '@/tests/domain/mocks'
+import { RequestError } from '@/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
-import { DataNotFound } from '@/errors'
 
 describe('GetProductByCodeController', () => {
   let productRepo: MockProxy<GetProductByCode>
@@ -41,7 +41,7 @@ describe('GetProductByCodeController', () => {
   })
 
   it('should return 400', async () => {
-    const error = new DataNotFound('some error')
+    const error = new RequestError('some error')
     productRepo.getProductByCode.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)

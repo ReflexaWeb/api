@@ -1,9 +1,9 @@
 import { GetAllProduct } from '@/domain/contracts/repos'
 
 export class GetProductsUsecase implements GetAllProduct {
-  constructor (private readonly productRepo: GetAllProduct) {}
+  constructor (private readonly productRepository: GetAllProduct) {}
 
   async getAllProducts (filters?: GetAllProduct.Filters): Promise<GetAllProduct.Output> {
-    return await this.productRepo.getAllProducts(filters as GetAllProduct.Filters)
+    return await this.productRepository.getAllProducts(filters as GetAllProduct.Filters)
   }
 }

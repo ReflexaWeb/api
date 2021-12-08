@@ -1,5 +1,5 @@
 import { UpdateGroup } from '@/domain/contracts/repos'
-import { GroupNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 import { Request, Response } from 'express'
 
@@ -16,7 +16,7 @@ export class UpdateGroupController {
   }
 
   private handleError (error: any, res: Response): void {
-    if (error instanceof GroupNotFound) {
+    if (error instanceof RequestError) {
       res.status(422).json({ message: error.message })
     } else {
       res.status(500).json({ message: error })

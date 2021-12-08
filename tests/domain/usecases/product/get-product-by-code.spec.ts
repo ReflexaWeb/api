@@ -1,7 +1,7 @@
 import { productData } from '@/../tests/domain/mocks'
 import { GetProductByCode } from '@/domain/contracts/repos'
 import { GetProductByCodeUsecase } from '@/domain/usecases/product'
-import { ProductNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
@@ -26,7 +26,7 @@ describe('GetProductByCodeUsecase', () => {
   })
 
   it('should return empty if no product were found by provided code', async () => {
-    const productNotFound = new ProductNotFound('Produto de código [any_product_code] não foi encontrado.')
+    const productNotFound = new RequestError('Produto de código [any_product_code] não foi encontrado.')
     productRepo.getProductByCode.mockResolvedValueOnce(undefined)
 
     await expect(sut.getProductByCode('any_product_code')).rejects.toThrow(productNotFound)

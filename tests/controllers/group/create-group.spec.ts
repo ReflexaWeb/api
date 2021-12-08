@@ -1,6 +1,6 @@
 import { CreateGroupController } from '@/controllers/group'
 import { CreateGroup, GetGroupByCode } from '@/domain/contracts/repos'
-import { GroupFound, RequiredFieldError } from '@/errors'
+import { RequestError, RequiredFieldError } from '@/errors'
 import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -35,12 +35,12 @@ describe('CreateGroupController', () => {
   it('should return 201', async () => {
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenNthCalledWith(1, { ...req.body })
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, req.body)
     expect(res.sendStatus).toHaveBeenNthCalledWith(1, 201)
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new GroupFound('some error')
+    const mockThrownError = new RequestError('some error')
     groupRepo.create.mockRejectedValueOnce(mockThrownError)
 
     await sut.handle(req, res)

@@ -1,23 +1,23 @@
 import { CreateProduct, GetGroupByCode, GetProductByCode } from '@/domain/contracts/repos'
 import { Product } from '@/domain/entities'
-import { GroupNotFound, ProductFound, RequiredFieldError } from '@/errors'
+import { RequestError, RequiredFieldError } from '@/errors'
 
 export class CreateProductUsecase {
   constructor (
-    private readonly productRepo: CreateProduct & GetProductByCode,
-    private readonly groupRepo: GetGroupByCode
+    private readonly productRepository: CreateProduct & GetProductByCode,
+    private readonly groupRepository: GetGroupByCode
   ) {}
 
   async create (input: CreateProduct.Input): Promise<void> {
     this.validate(input)
-    const productExists = await this.productRepo.getProductByCode(input.code)
+    const productExists = await this.productRepository.getProductByCode(input.code)
     if (!productExists) {
-      const group = await this.groupRepo.getGroupByCode(input.group_code)
-      if (!group) throw new GroupNotFound(`Grupo de código ${input.group_code} não encontrado.`)
+      const group = await this.groupRepository.getGroupByCode(input.group_code)
+      if (!group) throw new RequestError(`Grupo de código ${input.group_code} não encontrado.`)
       const product = new Product(input)
-      await this.productRepo.create(product)
+      await this.productRepository.create(product)
     } else {
-      throw new ProductFound(`Produto de código ${input.code} encontrado.`)
+      throw new RequestError(`Produto de código ${input.code} encontrado.`)
     }
   }
 

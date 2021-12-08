@@ -1,5 +1,5 @@
 import { UpdateProduct } from '@/domain/contracts/repos'
-import { ProductNotFound } from '@/errors'
+import { RequestError } from '@/errors'
 
 import { Request, Response } from 'express'
 
@@ -16,7 +16,7 @@ export class UpdateProductController {
   }
 
   private handleError (error: any, res: Response): void {
-    if (error instanceof ProductNotFound) {
+    if (error instanceof RequestError) {
       res.status(422).json({ message: error.message })
     } else {
       res.status(500).json({ message: error })
