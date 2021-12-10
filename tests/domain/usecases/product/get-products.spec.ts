@@ -19,8 +19,9 @@ describe('GetProductsUsecase', () => {
   it('should be able return all products', async () => {
     productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
 
-    await sut.getAllProducts()
+    const response = await sut.getAllProducts()
 
+    expect(response).toStrictEqual(mockProductsResponse)
     expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
   })
 

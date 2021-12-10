@@ -44,24 +44,24 @@ describe('UpdateGroupController', () => {
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new RequestError('some error')
-    groupRepo.update.mockRejectedValueOnce(mockThrownError)
+    const error = new RequestError('some error')
+    groupRepo.update.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
     expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 422)
-    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
 
   it('should return 500', async () => {
-    const mockThrownError = new Error('some error')
-    groupRepo.update.mockRejectedValueOnce(mockThrownError)
+    const error = new Error('some error')
+    groupRepo.update.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
     expect(groupRepo.update).toHaveBeenNthCalledWith(1, req.params.code, req.body)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
-    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })
 })

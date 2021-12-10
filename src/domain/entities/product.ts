@@ -1,5 +1,19 @@
 export type ProductData = Product
 
+export type ProductCollection = {
+  id: number
+  name: string
+  code: string
+  reference: string
+  unity: string
+  fraction: string
+  product_url: string
+  active: boolean
+  group_code: string
+  created_at: Date
+  updated_at?: Date
+}
+
 export class Product {
   name: string
   code: string

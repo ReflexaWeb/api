@@ -22,7 +22,7 @@ describe('GetProductsByGroupCodeUseCase', () => {
     const response = await sut.getProductsByGroupCode(productData.group_code)
 
     expect(response).toHaveLength(1)
-    expect(response).toEqual([{ ...productData }])
+    expect(response).toStrictEqual([productData])
     expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, productData.group_code)
   })
 
@@ -31,7 +31,6 @@ describe('GetProductsByGroupCodeUseCase', () => {
 
     const response = await sut.getProductsByGroupCode(productData.group_code)
 
-    expect(response).toHaveLength(0)
     expect(response).toEqual([])
     expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, productData.group_code)
   })

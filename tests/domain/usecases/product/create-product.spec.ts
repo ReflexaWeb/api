@@ -32,7 +32,7 @@ describe('CreateProductUsecase', () => {
   it('should not be able to create a new product if given group code not exists', async () => {
     productRepo.getProductByCode.mockResolvedValue(undefined)
     groupRepo.getGroupByCode.mockResolvedValue(undefined)
-    const error = new RequestError(`Grupo de código ${productData.group_code} não encontrado.`)
+    const error = new RequestError(`Grupo de código [${productData.group_code}] não encontrado.`)
 
     const promise = sut.create(productData)
 
@@ -41,7 +41,7 @@ describe('CreateProductUsecase', () => {
 
   it('should not be able to create a new product if given code already exists', async () => {
     productRepo.getProductByCode.mockResolvedValue(productData)
-    const error = new RequestError(`Produto de código ${productData.code} encontrado.`)
+    const error = new RequestError(`Produto de código [${productData.code}] encontrado.`)
     productRepo.create.mockRejectedValueOnce(error)
 
     const promise = sut.create(productData)
@@ -56,7 +56,8 @@ describe('CreateProductUsecase', () => {
 
     const invalidProductData = { ...productData, reference: '' }
 
-    await expect(sut.create(invalidProductData)).rejects.toStrictEqual(error)
+    const promise = sut.create(invalidProductData)
+    await expect(promise).rejects.toStrictEqual(error)
   })
 
   it('should not be able to create a new product if invalid name were provided', async () => {
@@ -66,7 +67,8 @@ describe('CreateProductUsecase', () => {
 
     const invalidProductData = { ...productData, name: '' }
 
-    await expect(sut.create(invalidProductData)).rejects.toStrictEqual(error)
+    const promise = sut.create(invalidProductData)
+    await expect(promise).rejects.toStrictEqual(error)
   })
 
   it('should not be able to create a new product if invalid code were provided', async () => {
@@ -76,7 +78,8 @@ describe('CreateProductUsecase', () => {
 
     const invalidProductData = { ...productData, code: '' }
 
-    await expect(sut.create(invalidProductData)).rejects.toStrictEqual(error)
+    const promise = sut.create(invalidProductData)
+    await expect(promise).rejects.toStrictEqual(error)
   })
 
   it('should not be able to create a new product if invalid code and name were provided', async () => {
@@ -86,6 +89,7 @@ describe('CreateProductUsecase', () => {
 
     const invalidProductData = { ...productData, code: '', name: '' }
 
-    await expect(sut.create(invalidProductData)).rejects.toStrictEqual(error)
+    const promise = sut.create(invalidProductData)
+    await expect(promise).rejects.toStrictEqual(error)
   })
 })

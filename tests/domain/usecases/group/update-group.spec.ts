@@ -21,15 +21,15 @@ describe('UpdateGroupUsecase', () => {
   it('should be able to update an existing group', async () => {
     await sut.update(groupData.code, groupData)
 
-    expect(groupRepo.update).toHaveBeenCalledWith(groupData.code, { ...groupData })
+    expect(groupRepo.update).toHaveBeenNthCalledWith(1, groupData.code, groupData)
   })
 
   it('should return 422 if not group was found', async () => {
-    const mockThrownError = new RequestError(`Grupo de código ${groupData.code} não encontrado.`)
+    const error = new RequestError(`Grupo de código [${groupData.code}] não encontrado.`)
     groupRepo.getGroupByCode.mockResolvedValueOnce(undefined)
 
-    await expect(sut.update(groupData.code, groupData)).rejects.toThrow(mockThrownError)
+    const promise = sut.update(groupData.code, groupData)
 
-    expect(groupRepo.getGroupByCode).toHaveBeenCalledWith(groupData.code)
+    await expect(promise).rejects.toThrow(error)
   })
 })

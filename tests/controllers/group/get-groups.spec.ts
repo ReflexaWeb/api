@@ -38,7 +38,7 @@ describe('GetGroupsController', () => {
     expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
-  it('should return 200 without data', async () => {
+  it('should return 200 with no data', async () => {
     groupRepo.getAllGroups.mockResolvedValue([])
 
     await sut.handle(req, res)

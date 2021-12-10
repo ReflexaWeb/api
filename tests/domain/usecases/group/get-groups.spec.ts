@@ -16,11 +16,12 @@ describe('GetGroupsUsecase', () => {
     sut = new GetGroupsUsecase(groupRepo)
   })
 
-  it('should be able return all Groups', async () => {
+  it('should be able return all groups', async () => {
     groupRepo.getAllGroups.mockResolvedValue([groupData])
 
-    await sut.getAllGroups()
+    const response = await sut.getAllGroups()
 
-    expect(groupRepo.getAllGroups).toHaveBeenCalled()
+    expect(response).toStrictEqual([groupData])
+    expect(groupRepo.getAllGroups).toHaveBeenCalledTimes(1)
   })
 })

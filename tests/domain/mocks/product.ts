@@ -1,6 +1,5 @@
 import { ProductsPaginationResponse } from '@/domain/contracts/repos'
-import { Product } from '@/domain/entities'
-import { ProductMySQL } from '@/infra/db/mysql/entities'
+import { Product, ProductCollection } from '@/domain/entities'
 
 export const productData: Product = {
   name: 'any_name',
@@ -13,7 +12,7 @@ export const productData: Product = {
   group_code: '001'
 }
 
-const productDataCollection: ProductMySQL[] = [
+const productCollection: ProductCollection[] = [
   {
     id: 1,
     name: 'any_name',
@@ -50,5 +49,5 @@ export const mockProductsResponse: ProductsPaginationResponse = {
   current_page: 1,
   prev_page: null,
   next_page: 2,
-  data: productDataCollection
+  data: productCollection
 }

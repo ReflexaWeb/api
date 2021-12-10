@@ -40,13 +40,23 @@ describe('GetProductByGroupCodeController', () => {
     expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 
+  it('should return 200 with no data', async () => {
+    productRepo.getProductsByGroupCode.mockResolvedValue([])
+
+    await sut.handle(req, res)
+
+    expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, req.params.group_code)
+    expect(res.json).toHaveBeenNthCalledWith(1, [])
+    expect(res.status).toHaveBeenNthCalledWith(1, 200)
+  })
+
   it('should return 400', async () => {
     const error = new RequestError('some error')
     productRepo.getProductsByGroupCode.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductsByGroupCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, req.params.group_code)
     expect(res.status).toHaveBeenNthCalledWith(1, 400)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
@@ -57,7 +67,7 @@ describe('GetProductByGroupCodeController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductsByGroupCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, req.params.group_code)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })

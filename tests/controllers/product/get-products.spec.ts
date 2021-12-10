@@ -50,16 +50,16 @@ describe('GetProductsController', () => {
   })
 
   it('should return 200 without data', async () => {
-    const mockProductsResponseWithEmtpyContent = {
+    const mockProductsResponseWithNoData = {
       ...mockProductsResponse,
       data: []
     }
-    productRepo.getAllProducts.mockResolvedValueOnce(mockProductsResponseWithEmtpyContent)
+    productRepo.getAllProducts.mockResolvedValueOnce(mockProductsResponseWithNoData)
 
     await sut.handle(req, res)
 
     expect(productRepo.getAllProducts).toHaveBeenCalledTimes(1)
-    expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponseWithEmtpyContent)
+    expect(res.json).toHaveBeenNthCalledWith(1, mockProductsResponseWithNoData)
     expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 

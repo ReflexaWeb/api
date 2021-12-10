@@ -42,6 +42,7 @@ describe('CreateGroupUsecase', () => {
 
     const invalidgroupData = { ...groupData, code: '' }
 
-    await expect(sut.create(invalidgroupData)).rejects.toStrictEqual(error)
+    const promise = sut.create(invalidgroupData)
+    await expect(promise).rejects.toStrictEqual(error)
   })
 })

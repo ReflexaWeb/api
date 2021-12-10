@@ -8,6 +8,7 @@ import { mock, MockProxy } from 'jest-mock-extended'
 describe('GetProductByCodeUsecase', () => {
   let productRepo: MockProxy<GetProductByCode>
   let sut: GetProductByCodeUsecase
+  const productCode = 'any_product_code'
 
   beforeAll(() => {
     productRepo = mock()
@@ -19,19 +20,17 @@ describe('GetProductByCodeUsecase', () => {
   })
 
   it('should return an specific product by code', async () => {
-    await sut.getProductByCode('any_product_code')
+    await sut.getProductByCode(productCode)
 
-    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
-    expect(productRepo.getProductByCode).toHaveBeenCalledWith('any_product_code')
+    expect(productRepo.getProductByCode).toHaveBeenNthCalledWith(1, productCode)
   })
 
   it('should return empty if no product were found by provided code', async () => {
-    const productNotFound = new RequestError('Produto de código [any_product_code] não foi encontrado.')
+    const productNotFound = new RequestError(`Produto de código [${productCode}] não foi encontrado.`)
     productRepo.getProductByCode.mockResolvedValueOnce(undefined)
 
-    await expect(sut.getProductByCode('any_product_code')).rejects.toThrow(productNotFound)
+    await expect(sut.getProductByCode(productCode)).rejects.toThrow(productNotFound)
 
-    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
-    expect(productRepo.getProductByCode).toHaveBeenCalledWith('any_product_code')
+    expect(productRepo.getProductByCode).toHaveBeenNthCalledWith(1, productCode)
   })
 })

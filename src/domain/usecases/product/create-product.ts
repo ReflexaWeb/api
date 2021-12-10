@@ -13,11 +13,11 @@ export class CreateProductUsecase {
     const productExists = await this.productRepository.getProductByCode(input.code)
     if (!productExists) {
       const group = await this.groupRepository.getGroupByCode(input.group_code)
-      if (!group) throw new RequestError(`Grupo de código ${input.group_code} não encontrado.`)
+      if (!group) throw new RequestError(`Grupo de código [${input.group_code}] não encontrado.`)
       const product = new Product(input)
       await this.productRepository.create(product)
     } else {
-      throw new RequestError(`Produto de código ${input.code} encontrado.`)
+      throw new RequestError(`Produto de código [${input.code}] encontrado.`)
     }
   }
 

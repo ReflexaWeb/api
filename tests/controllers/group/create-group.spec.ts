@@ -40,35 +40,35 @@ describe('CreateGroupController', () => {
   })
 
   it('should return 422', async () => {
-    const mockThrownError = new RequestError('some error')
-    groupRepo.create.mockRejectedValueOnce(mockThrownError)
+    const error = new RequestError('some error')
+    groupRepo.create.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
     expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
     expect(res.status).toHaveBeenNthCalledWith(1, 422)
-    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.message })
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
 
   it('should return 400', async () => {
-    const mockThrownError = new RequiredFieldError(['some error'])
-    groupRepo.create.mockRejectedValueOnce(mockThrownError)
+    const error = new RequiredFieldError(['some error'])
+    groupRepo.create.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
     expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
     expect(res.status).toHaveBeenNthCalledWith(1, 400)
-    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError.errors })
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error.errors })
   })
 
   it('should return 500', async () => {
-    const mockThrownError = new Error('some error')
-    groupRepo.create.mockRejectedValueOnce(mockThrownError)
+    const error = new Error('some error')
+    groupRepo.create.mockRejectedValueOnce(error)
 
     await sut.handle(req, res)
 
     expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
-    expect(res.json).toHaveBeenNthCalledWith(1, { message: mockThrownError })
+    expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })
 })

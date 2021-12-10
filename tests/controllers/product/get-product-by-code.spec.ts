@@ -46,7 +46,7 @@ describe('GetProductByCodeController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductByCode).toHaveBeenNthCalledWith(1, req.params.code)
     expect(res.status).toHaveBeenNthCalledWith(1, 400)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
@@ -57,7 +57,7 @@ describe('GetProductByCodeController', () => {
 
     await sut.handle(req, res)
 
-    expect(productRepo.getProductByCode).toHaveBeenCalledTimes(1)
+    expect(productRepo.getProductByCode).toHaveBeenNthCalledWith(1, req.params.code)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })

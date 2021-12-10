@@ -3,14 +3,14 @@ import { Group } from '@/domain/entities'
 import { RequestError, RequiredFieldError } from '@/errors'
 
 export class CreateGroupUsecase {
-  constructor (private readonly groupRepositoru: CreateGroup & GetGroupByCode) {}
+  constructor (private readonly groupRepository: CreateGroup & GetGroupByCode) {}
 
   async create (input: CreateGroup.Input): Promise<void> {
     this.validate(input)
-    const GroupExists = await this.groupRepositoru.getGroupByCode(input.code)
-    if (!GroupExists) {
+    const groupExists = await this.groupRepository.getGroupByCode(input.code)
+    if (!groupExists) {
       const group = new Group(input)
-      await this.groupRepositoru.create(group)
+      await this.groupRepository.create(group)
     } else {
       throw new RequestError(`Grupo de código ${input.code} encontrado.`)
     }

@@ -6,7 +6,7 @@ export class UpdateProductUsecase {
 
   async update (code: string, input: UpdateProduct.Input): Promise<void> {
     const product = await this.productRepository.getProductByCode(code)
-    if (!product) throw new RequestError(`Produto de código ${code} não encontrado.`)
+    if (!product) throw new RequestError(`Produto de código [${code}] não encontrado.`)
     await this.productRepository.update(code, input)
   }
 }
