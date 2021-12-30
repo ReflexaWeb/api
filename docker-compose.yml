@@ -2,12 +2,11 @@ version: "3"
 
 services:
   mysql:
-    container_name: reflexa-mysql
+    # platform: linux/x86_64 => uncomment this line to run on macOS M1
+    container_name: mysql-container
     image: mysql
     env_file:
       - .env
-    environment: 
-      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
     ports:
       - 3306:3306
     volumes:
