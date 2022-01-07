@@ -1,6 +1,6 @@
 import { GetProductsByGroupCodeController } from '@/controllers/product'
 import { GetProductsByGroupCode } from '@/domain/contracts/repos'
-import { productData } from '@/tests/domain/mocks'
+import { productCollection, productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
@@ -20,7 +20,7 @@ describe('GetProductByGroupCodeController', () => {
     res.status = jest.fn().mockReturnThis()
     res.json = jest.fn().mockReturnThis()
 
-    productRepo.getProductsByGroupCode.mockResolvedValue([productData])
+    productRepo.getProductsByGroupCode.mockResolvedValue(productCollection)
   })
 
   beforeEach(() => {
@@ -36,7 +36,7 @@ describe('GetProductByGroupCodeController', () => {
     await sut.handle(req, res)
 
     expect(productRepo.getProductsByGroupCode).toHaveBeenNthCalledWith(1, req.params.group_code)
-    expect(res.json).toHaveBeenNthCalledWith(1, [productData])
+    expect(res.json).toHaveBeenNthCalledWith(1, productCollection)
     expect(res.status).toHaveBeenNthCalledWith(1, 200)
   })
 

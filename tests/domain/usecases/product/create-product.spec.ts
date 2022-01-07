@@ -49,45 +49,12 @@ describe('CreateProductUsecase', () => {
     await expect(promise).rejects.toThrow(error)
   })
 
-  it('should not be able to create a new product if invalid reference were provided', async () => {
-    const errorsThatShouldBeGenerated = ['O campo [REFERENCE] é obrigatório.']
+  it('should not be able to create a new product if invalid fields were provided', async () => {
+    const errorsThatShouldBeGenerated = ['O campo [NAME] é obrigatório.', 'O campo [CODE] é obrigatório.', 'O campo [GROUP_CODE] é obrigatório.']
     const error = new RequiredFieldError(errorsThatShouldBeGenerated)
     productRepo.create.mockRejectedValueOnce(error)
 
-    const invalidProductData = { ...productData, reference: '' }
-
-    const promise = sut.create(invalidProductData)
-    await expect(promise).rejects.toStrictEqual(error)
-  })
-
-  it('should not be able to create a new product if invalid name were provided', async () => {
-    const errorsThatShouldBeGenerated = ['O campo [NAME] é obrigatório.']
-    const error = new RequiredFieldError(errorsThatShouldBeGenerated)
-    productRepo.create.mockRejectedValueOnce(error)
-
-    const invalidProductData = { ...productData, name: '' }
-
-    const promise = sut.create(invalidProductData)
-    await expect(promise).rejects.toStrictEqual(error)
-  })
-
-  it('should not be able to create a new product if invalid code were provided', async () => {
-    const errorsThatShouldBeGenerated = ['O campo [CODE] é obrigatório.']
-    const error = new RequiredFieldError(errorsThatShouldBeGenerated)
-    productRepo.create.mockRejectedValueOnce(error)
-
-    const invalidProductData = { ...productData, code: '' }
-
-    const promise = sut.create(invalidProductData)
-    await expect(promise).rejects.toStrictEqual(error)
-  })
-
-  it('should not be able to create a new product if invalid code and name were provided', async () => {
-    const errorsThatShouldBeGenerated = ['O campo [NAME] é obrigatório.', 'O campo [CODE] é obrigatório.']
-    const error = new RequiredFieldError(errorsThatShouldBeGenerated)
-    productRepo.create.mockRejectedValueOnce(error)
-
-    const invalidProductData = { ...productData, code: '', name: '' }
+    const invalidProductData = { ...productData, name: '', code: '', group_code: '' }
 
     const promise = sut.create(invalidProductData)
     await expect(promise).rejects.toStrictEqual(error)

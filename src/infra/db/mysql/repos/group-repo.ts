@@ -21,8 +21,7 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
   }
 
   async getGroupByCode (code: string): Promise<GetGroupByCode.Output> {
-    const group = await this.repository.findOne({ code })
-    if (group !== undefined) return group
+    return await this.repository.findOne({ code })
   }
 
   async update (code: string, updatedData: GroupData): Promise<void> {

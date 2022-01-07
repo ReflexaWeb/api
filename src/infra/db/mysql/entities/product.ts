@@ -11,23 +11,23 @@ export class ProductMySQL {
   @Column()
   code!: string
 
-  @Column()
-  reference!: string
+  @Column({ default: null })
+  reference?: string
 
-  @Column()
-  unity!: string
+  @Column({ default: null })
+  unity?: string
 
   @Column({ default: null })
   fraction?: string
 
+  @Column({ default: null })
+  product_url?: string
+
   @Column()
-  product_url!: string
+  active: boolean
 
   @Column()
   group_code!: string
-
-  @Column()
-  active!: boolean
 
   @Column({ default: () => 'now()' })
   created_at: Date

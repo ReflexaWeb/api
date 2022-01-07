@@ -1,4 +1,5 @@
 import { Product, ProductData } from '@/domain/entities'
+import { ProductMySQL } from '@/infra/db/mysql/entities'
 
 export type ProductsPaginationResponse = {
   from: number
@@ -8,7 +9,7 @@ export type ProductsPaginationResponse = {
   current_page: number
   prev_page?: number | null
   next_page?: number | null
-  data: Product[]
+  data: ProductMySQL[]
 }
 
 export interface CreateProduct {
@@ -54,5 +55,5 @@ export interface GetProductsByGroupCode {
 }
 
 export namespace GetProductsByGroupCode {
-  export type Output = Product[]
+  export type Output = ProductMySQL[]
 }

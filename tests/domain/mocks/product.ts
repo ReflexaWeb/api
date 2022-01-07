@@ -1,5 +1,6 @@
 import { ProductsPaginationResponse } from '@/domain/contracts/repos'
-import { Product, ProductCollection } from '@/domain/entities'
+import { Product } from '@/domain/entities'
+import { ProductMySQL } from '@/infra/db/mysql/entities'
 
 export const productData: Product = {
   name: 'any_name',
@@ -8,11 +9,11 @@ export const productData: Product = {
   unity: 'any_unity',
   fraction: 'any_fraction',
   product_url: 'any_product_url',
-  active: true,
-  group_code: '001'
+  group_code: '001',
+  active: true
 }
 
-const productCollection: ProductCollection[] = [
+export const productCollection: ProductMySQL[] = [
   {
     id: 1,
     name: 'any_name',

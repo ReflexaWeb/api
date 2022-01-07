@@ -17,12 +17,12 @@ export type ProductCollection = {
 export class Product {
   name: string
   code: string
-  reference: string
-  unity: string
+  reference?: string
+  unity?: string
   fraction?: string
-  product_url: string
-  active: boolean
+  product_url?: string
   group_code: string
+  active: boolean
 
   constructor (productData: ProductData) {
     this.name = productData.name

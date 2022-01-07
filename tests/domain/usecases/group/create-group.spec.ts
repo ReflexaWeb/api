@@ -35,12 +35,12 @@ describe('CreateGroupUsecase', () => {
     await expect(promise).rejects.toThrow(error)
   })
 
-  it('should not be able to create a new group if invalid reference were provided', async () => {
-    const errorsThatShouldBeGenerated = ['O campo [CODE] é obrigatório.']
+  it('should not be able to create a new group if invalid fields were provided', async () => {
+    const errorsThatShouldBeGenerated = ['O campo [NAME] é obrigatório.', 'O campo [CODE] é obrigatório.']
     const error = new RequiredFieldError(errorsThatShouldBeGenerated)
     groupRepo.create.mockRejectedValueOnce(error)
 
-    const invalidgroupData = { ...groupData, code: '' }
+    const invalidgroupData = { ...groupData, name: '', code: '' }
 
     const promise = sut.create(invalidgroupData)
     await expect(promise).rejects.toStrictEqual(error)

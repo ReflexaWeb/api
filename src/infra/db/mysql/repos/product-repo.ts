@@ -21,8 +21,7 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
   }
 
   async getProductByCode (code: string): Promise<GetProductByCode.Output> {
-    const product = this.repository.findOne({ code })
-    if (product !== undefined) return product
+    return await this.repository.findOne({ code })
   }
 
   async update (code: string, updatedData: ProductData): Promise<void> {
@@ -30,23 +29,24 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
     if (!product) throw new RequestError(`Produto de código ${code} não encontrado.`)
     await this.repository.update({ code }, {
       name: updatedData.name,
-      reference: updatedData.reference,
-      unity: updatedData.unity,
-      fraction: updatedData.fraction,
-      product_url: updatedData.product_url,
-      active: updatedData.active,
+      reference: updatedData?.reference ?? undefined,
+      unity: updatedData?.unity ?? undefined,
+      fraction: updatedData?.fraction ?? undefined,
+      product_url: updatedData?.product_url ?? undefined,
+      active: updatedData?.active ?? true,
       group_code: updatedData.group_code,
       updated_at: new Date()
     })
   }
 
   async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
-    return await this.repository.find({
+    const teste = await this.repository.find({
       where: {
         group_code,
         active: true
       }
     })
+    return teste
   }
 
   private async mountQueryBuilder (filters?: GetAllProduct.Filters): Promise<GetAllProduct.Output> {
