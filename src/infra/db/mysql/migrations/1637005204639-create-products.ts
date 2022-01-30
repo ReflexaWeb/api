@@ -22,12 +22,28 @@ export class createProducts1637005204639 implements MigrationInterface {
               isUnique: true
             },
             {
-              name: 'reference',
+              name: 'group_code',
               type: 'varchar'
             },
             {
+              name: 'reference',
+              type: 'varchar',
+              isNullable: true
+            },
+            {
               name: 'unity',
-              type: 'varchar'
+              type: 'varchar',
+              isNullable: true
+            },
+            {
+              name: 'unity_reference',
+              type: 'varchar',
+              isNullable: true
+            },
+            {
+              name: 'fraction_reference',
+              type: 'varchar',
+              isNullable: true
             },
             {
               name: 'fraction',
@@ -37,17 +53,13 @@ export class createProducts1637005204639 implements MigrationInterface {
             },
             {
               name: 'product_url',
-              type: 'varchar'
+              type: 'varchar',
+              isNullable: true
             },
             {
               name: 'active',
               type: 'boolean',
               default: true
-            },
-            {
-              name: 'group_code',
-              type: 'varchar',
-              isNullable: false
             },
             {
               name: 'created_at',

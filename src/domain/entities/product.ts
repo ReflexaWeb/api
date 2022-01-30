@@ -7,6 +7,8 @@ export type ProductCollection = {
   reference: string
   unity: string
   fraction: string
+  unity_reference: string
+  fraction_reference: string
   product_url: string
   active: boolean
   group_code: string
@@ -20,6 +22,8 @@ export class Product {
   reference?: string
   unity?: string
   fraction?: string
+  unity_reference?: string
+  fraction_reference?: string
   product_url?: string
   group_code: string
   active: boolean
@@ -31,6 +35,8 @@ export class Product {
     this.unity = productData.unity
     this.fraction = productData.fraction
     this.product_url = productData.product_url
+    this.unity_reference = productData.unity_reference
+    this.fraction_reference = productData.fraction_reference
     this.group_code = productData.group_code
     this.active = true
   }

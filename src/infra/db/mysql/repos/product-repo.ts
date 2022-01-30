@@ -34,6 +34,8 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
       fraction: updatedData?.fraction ?? undefined,
       product_url: updatedData?.product_url ?? undefined,
       active: updatedData?.active ?? true,
+      unity_reference: updatedData.unity_reference ?? undefined,
+      fraction_reference: updatedData.fraction_reference ?? undefined,
       group_code: updatedData.group_code,
       updated_at: new Date()
     })

@@ -163,7 +163,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/ProductResponse"
+              $ref: "#/definitions/ProductsResponse"
         500:
           description: "Internal Server Error"
           schema:
@@ -181,7 +181,7 @@ paths:
         200:
           description: Successful operation
           schema:
-            $ref: "#/definitions/ProductResponse"
+            $ref: "#/definitions/ProductsResponse"
         404:
           description: Not found
         500:
@@ -201,7 +201,7 @@ paths:
           description: "Atualizar novo produto"
           required: true
           schema:
-            $ref: "#/definitions/PostProductPayloadWithoutCode"
+            $ut: "#/definitions/PostProductPayloadWithoutCode"
       responses:
         201:
           description: Successful operation
@@ -211,7 +211,7 @@ paths:
           description: Not Found
         500:
           description: Internal server error
-  /products/groups/{group_code}:
+  /products/products-by-group/{group_code}:
     get:
       tags:
         - "Products"
@@ -224,7 +224,7 @@ paths:
         200:
           description: Successful operation
           schema:
-            $ref: "#/definitions/ProductResponse"
+            $ref: "#/definitions/ProductsResponse"
         404:
           description: Not found
         500:
@@ -237,9 +237,6 @@ definitions:
     required:
       - name
       - code
-      - reference
-      - unity
-      - product_url
       - group_code
     properties:
       name:
@@ -250,6 +247,10 @@ definitions:
         type: string
         example: '001'
         description: 'Código do produto'
+      group_code:
+        type: string
+        example: '001'
+        description: 'Código do grupo que o produto pertence'
       reference:
         type: string
         example: '10 PCT'
@@ -258,6 +259,14 @@ definitions:
         type: string
         example: '1'
         description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
       fraction:
         type: string
         example: '1'
@@ -266,24 +275,21 @@ definitions:
         type: string
         example: 'https://site.com/url-image.png'
         description: 'URL da imagem'
-      group_code:
-        type: string
-        example: '001'
-        description: 'Código do grupo que o produto pertence'
-  PostProductPayloadWithoutCode:
+      
+  PutProductPayloadWithoutCode:
     type: object
     required:
       - name
-      - reference
-      - unity
-      - active
-      - product_url
       - group_code
     properties:
       name:
         type: string
         description: 'Nome do produto'
         example: 'Produto 1'
+      group_code:
+        type: string
+        example: '001'
+        description: 'Código do grupo que o produto pertence'
       reference:
         type: string
         example: '10 PCT'
@@ -292,6 +298,14 @@ definitions:
         type: string
         example: '1'
         description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
       fraction:
         type: string
         example: '1'
@@ -300,10 +314,7 @@ definitions:
         type: string
         example: 'https://site.com/url-image.png'
         description: 'URL da imagem'
-      group_code:
-        type: string
-        example: '001'
-        description: 'Código do grupo que o produto pertence'
+      
       active:
         type: boolean
         example: false
@@ -358,7 +369,7 @@ definitions:
       updated_at:
         type: string
         example: "2021-11-18 00:00:00"
-  ProductResponse:
+  ProductsResponse:
     type: object
     required:
       - id
@@ -367,6 +378,8 @@ definitions:
       - reference
       - unity
       - fraction
+      - unity_reference
+      - fraction_reference
       - product_url
       - group_code
       - active
@@ -392,6 +405,14 @@ definitions:
         type: string
         example: '1'
         description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
       fraction:
         type: string
         example: '1'

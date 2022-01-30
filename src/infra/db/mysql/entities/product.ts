@@ -23,6 +23,12 @@ export class ProductMySQL {
   @Column({ default: null })
   product_url?: string
 
+  @Column({ default: null })
+  unity_reference?: string
+
+  @Column({ default: null })
+  fraction_reference?: string
+
   @Column()
   active: boolean
 
