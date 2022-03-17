@@ -6,14 +6,14 @@ import { ProductMySQL } from '@/infra/db/mysql/entities'
 import { getRepository, Repository } from 'typeorm'
 
 export class ProductRepository implements CreateProduct, GetProductByCode, UpdateProduct, GetAllProduct, GetProductsByGroupCode {
-  private readonly repository: Repository<ProductMySQL>
+  private readonly productRepository: Repository<ProductMySQL>
 
   constructor () {
-    this.repository = getRepository(ProductMySQL)
+    this.productRepository = getRepository(ProductMySQL)
   }
 
   async create (product: Product): Promise<void> {
-    await this.repository.save(product)
+    await this.productRepository.save(product)
   }
 
   async getAllProducts (filters?: GetAllProduct.Filters): Promise<GetAllProduct.Output> {
@@ -21,13 +21,13 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
   }
 
   async getProductByCode (code: string): Promise<GetProductByCode.Output> {
-    return await this.repository.findOne({ code })
+    return await this.productRepository.findOne({ code })
   }
 
   async update (code: string, updatedData: ProductData): Promise<void> {
-    const product = await this.repository.findOne({ code })
+    const product = await this.productRepository.findOne({ code })
     if (!product) throw new RequestError(`Produto de código ${code} não encontrado.`)
-    await this.repository.update({ code }, {
+    await this.productRepository.update({ code }, {
       name: updatedData.name,
       reference: updatedData?.reference ?? undefined,
       unity: updatedData?.unity ?? undefined,
@@ -42,17 +42,16 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
   }
 
   async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
-    const teste = await this.repository.find({
+    return await this.productRepository.find({
       where: {
         group_code,
         active: true
       }
     })
-    return teste
   }
 
   private async mountQueryBuilder (filters?: GetAllProduct.Filters): Promise<GetAllProduct.Output> {
-    const queryBuilder = this.repository.createQueryBuilder('products')
+    const queryBuilder = this.productRepository.createQueryBuilder('products')
 
     if (filters?.active) {
       queryBuilder.andWhere(
@@ -69,6 +68,8 @@ export class ProductRepository implements CreateProduct, GetProductByCode, Updat
     if (filters?.name) {
       queryBuilder.andWhere('products.name LIKE :name', { name: `%${filters.name}%` })
     }
+
+    queryBuilder.orderBy('products.name', 'ASC')
 
     return queryBuilder.paginate()
   }

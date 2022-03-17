@@ -23,7 +23,6 @@ export namespace CreateProduct {
 export interface GetAllProduct {
   getAllProducts: (filters: GetAllProduct.Filters) => Promise<GetAllProduct.Output>
 }
-
 export namespace GetAllProduct {
   export type Filters = {
     active?: boolean

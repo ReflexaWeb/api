@@ -17,7 +17,11 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
   }
 
   async getAllGroups (): Promise<Group[]> {
-    return await this.repository.find()
+    return await this.repository.find({
+      order: {
+        name: 'ASC'
+      }
+    })
   }
 
   async getGroupByCode (code: string): Promise<GetGroupByCode.Output> {
