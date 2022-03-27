@@ -1,8 +1,7 @@
 import { GetAllProduct, GetProductByCode, GetProductsByGroupCode, UpdateProduct } from '@/domain/contracts/repos'
 import { Product, ProductData } from '@/domain/entities'
 import { RequestError } from '@/errors'
-import { ProductMySQL } from '@/infra/db/mysql/typeorm/entities'
-import { mysqlSource } from '@/infra/db/mysql/mysql-connection'
+import { ProductMySQL, mysqlSource } from '@/infra/db/mysql'
 
 import { Repository } from 'typeorm'
 

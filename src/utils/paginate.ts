@@ -19,8 +19,8 @@ export const paginate = async function (builder: SelectQueryBuilder<any>, per_pa
     current_page: page,
     prev_page: page > 1 ? (page - 1) : null,
     next_page: count > (skip + per_page) ? page + 1 : null,
-    last_page: last_page,
-    data: data || []
+    last_page,
+    data
   }
 }
 

@@ -1,8 +1,7 @@
 import { CreateGroup, GetAllGroup, GetGroupByCode, UpdateGroup } from '@/domain/contracts/repos'
 import { Group, GroupData } from '@/domain/entities'
 import { RequestError } from '@/errors'
-import { GroupMySQL } from '@/infra/db/mysql/typeorm/entities'
-import { mysqlSource } from '@/infra/db/mysql/mysql-connection'
+import { GroupMySQL, mysqlSource } from '@/infra/db/mysql'
 
 import { Repository } from 'typeorm'
 
@@ -17,7 +16,7 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
     await this.repository.save(group)
   }
 
-  async getAllGroups (): Promise<Group[]> {
+  async getAllGroups (): Promise<GetAllGroup.Output> {
     return await this.repository.find({
       order: {
         name: 'ASC'
