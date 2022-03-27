@@ -10,10 +10,6 @@ declare module 'typeorm' {
   }
 }
 
-/**
- * Boot the package by patching the SelectQueryBuilder
- *
- */
 export function pagination (req: Request, _: Response, next: NextFunction): void {
   SelectQueryBuilder.prototype.paginate = async function (per_page?: number | undefined): Promise<PaginationAwareObject> {
     const current_page = getPage(req)
