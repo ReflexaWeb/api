@@ -26,7 +26,7 @@ describe('UpdateGroupUsecase', () => {
 
   it('should return 422 if not group was found', async () => {
     const error = new RequestError(`Grupo de código [${groupData.code}] não encontrado.`)
-    groupRepo.getGroupByCode.mockResolvedValueOnce(undefined)
+    groupRepo.getGroupByCode.mockResolvedValueOnce(null)
 
     const promise = sut.update(groupData.code, groupData)
 

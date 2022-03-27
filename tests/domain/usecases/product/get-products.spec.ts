@@ -27,7 +27,7 @@ describe('GetProductsUsecase', () => {
 
   it('should be able return products with filters', async () => {
     productRepo.getAllProducts.mockResolvedValue(mockProductsResponse)
-    const filters = { active: true, name: 'any_name', group_code: '001' }
+    const filters = { name: 'any_name', group_code: '001' }
 
     const response = await sut.getAllProducts(filters)
 

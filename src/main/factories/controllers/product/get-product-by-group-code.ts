@@ -1,6 +1,6 @@
 import { GetProductsByGroupCodeController } from '@/controllers/product'
 import { GetProductsByGroupCodeUsecase } from '@/domain/usecases/product'
-import { ProductRepository } from '@/infra/db/mysql/repos'
+import { ProductRepository } from '@/infra/db/mysql/typeorm/repos'
 
 export const makeGetProductsByGroupCodeController = (): GetProductsByGroupCodeController => {
   const productRepo = new ProductRepository()

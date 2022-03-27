@@ -40,7 +40,7 @@ describe('GetProductsController', () => {
   })
 
   it('should return 200 with data and filters', async () => {
-    req.query = { active: String(1), name: 'any_name', group_code: '001' }
+    req.query = { name: 'any_name', group_code: '001' }
 
     await sut.handle(req, res)
 

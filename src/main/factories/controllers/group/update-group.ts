@@ -1,6 +1,6 @@
 import { UpdateGroupController } from '@/controllers/group'
 import { UpdateGroupUsecase } from '@/domain/usecases/group'
-import { GroupRepository } from '@/infra/db/mysql/repos'
+import { GroupRepository } from '@/infra/db/mysql/typeorm/repos'
 
 export const makeUpdateGroupController = (): UpdateGroupController => {
   const groupRepo = new GroupRepository()

@@ -1,6 +1,6 @@
 import { ProductsPaginationResponse } from '@/domain/contracts/repos'
 import { Product } from '@/domain/entities'
-import { ProductMySQL } from '@/infra/db/mysql/entities'
+import { ProductMySQL } from '@/infra/db/mysql/typeorm/entities'
 
 export const productData: Product = {
   name: 'any_name',

@@ -30,14 +30,6 @@ parameters:
     description: "Código do grupo (opcional)"
     in: "query"
     type: string
-  active:
-    name: "active"
-    description: "Status do produto"
-    in: "query"
-    type: number
-    enum:
-      - 0
-      - 1
   name:
     name: "name"
     description: "Nome do produto"
@@ -152,7 +144,6 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - $ref: "#/parameters/active"
         - $ref: "#/parameters/name"
         - $ref: "#/parameters/group_code_not_required"
         - $ref: "#/parameters/page"
@@ -314,7 +305,6 @@ definitions:
         type: string
         example: 'https://site.com/url-image.png'
         description: 'URL da imagem'
-      
       active:
         type: boolean
         example: false

@@ -26,7 +26,7 @@ describe('UpdateProductUsecase', () => {
 
   it('should return 422 if not product was found', async () => {
     const error = new RequestError(`Produto de código [${productData.code}] não encontrado.`)
-    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValueOnce(null)
 
     await expect(sut.update(productData.code, productData)).rejects.toThrow(error)
 

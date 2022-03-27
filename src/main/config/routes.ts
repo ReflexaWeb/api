@@ -4,7 +4,7 @@ import { join, resolve } from 'path'
 import cors from 'cors'
 import { serve, setup } from 'swagger-ui-express'
 import YAML from 'yamljs'
-import { pagination } from 'typeorm-pagination'
+import { pagination } from '@/utils'
 
 export const setupRoutes = (app: Express): void => {
   const router = Router()

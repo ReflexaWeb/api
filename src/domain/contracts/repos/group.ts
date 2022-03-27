@@ -13,7 +13,7 @@ export interface GetGroupByCode {
 }
 
 export namespace GetGroupByCode {
-  export type Output = Group | undefined
+  export type Output = Group | null
 }
 
 export interface GetAllGroup {

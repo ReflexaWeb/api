@@ -1,5 +1,5 @@
 import { Product, ProductData } from '@/domain/entities'
-import { ProductMySQL } from '@/infra/db/mysql/entities'
+import { ProductMySQL } from '@/infra/db/mysql/typeorm/entities'
 
 export type ProductsPaginationResponse = {
   from: number
@@ -25,7 +25,6 @@ export interface GetAllProduct {
 }
 export namespace GetAllProduct {
   export type Filters = {
-    active?: boolean
     name?: string
     group_code?: string
   }
@@ -37,7 +36,7 @@ export interface GetProductByCode {
 }
 
 export namespace GetProductByCode {
-  export type Output = Product | undefined
+  export type Output = Product | null
 }
 
 export interface UpdateProduct {

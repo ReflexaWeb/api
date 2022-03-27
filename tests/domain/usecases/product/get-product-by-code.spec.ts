@@ -27,7 +27,7 @@ describe('GetProductByCodeUsecase', () => {
 
   it('should return empty if no product were found by provided code', async () => {
     const productNotFound = new RequestError(`Produto de código [${productCode}] não foi encontrado.`)
-    productRepo.getProductByCode.mockResolvedValueOnce(undefined)
+    productRepo.getProductByCode.mockResolvedValueOnce(null)
 
     await expect(sut.getProductByCode(productCode)).rejects.toThrow(productNotFound)
 

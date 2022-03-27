@@ -21,7 +21,7 @@ describe('CreateProductUsecase', () => {
   })
 
   it('should be able to create a new product with all data', async () => {
-    productRepo.getProductByCode.mockResolvedValue(undefined)
+    productRepo.getProductByCode.mockResolvedValue(null)
     groupRepo.getGroupByCode.mockResolvedValue(groupData)
 
     await sut.create(productData)
@@ -30,8 +30,8 @@ describe('CreateProductUsecase', () => {
   })
 
   it('should not be able to create a new product if given group code not exists', async () => {
-    productRepo.getProductByCode.mockResolvedValue(undefined)
-    groupRepo.getGroupByCode.mockResolvedValue(undefined)
+    productRepo.getProductByCode.mockResolvedValue(null)
+    groupRepo.getGroupByCode.mockResolvedValue(null)
     const error = new RequestError(`Grupo de código [${productData.group_code}] não encontrado.`)
 
     const promise = sut.create(productData)

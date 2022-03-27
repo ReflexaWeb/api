@@ -19,7 +19,7 @@ describe('CreateGroupUsecase', () => {
   })
 
   it('should be able to create a new group with all data', async () => {
-    groupRepo.getGroupByCode.mockResolvedValueOnce(undefined)
+    groupRepo.getGroupByCode.mockResolvedValueOnce(null)
 
     await sut.create(groupData)
 
