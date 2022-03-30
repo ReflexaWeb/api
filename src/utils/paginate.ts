@@ -2,23 +2,22 @@ import { SelectQueryBuilder } from 'typeorm'
 
 export const paginate = async function (builder: SelectQueryBuilder<any>, per_page: number, page: number): Promise<PaginationAwareObject> {
   const skip = (page - 1) * per_page
-  const total = builder
-  const count = await total.getCount()
-  const calcule_last_page = count % per_page
-  const last_page = calcule_last_page === 0 ? count / per_page : Math.trunc(count / per_page) + 1
+  const total = await builder.getCount()
+  const calcule_last_page = total % per_page
+  const last_page = calcule_last_page === 0 ? total / per_page : Math.trunc(total / per_page) + 1
   const data = await builder
     .skip(skip)
     .take(per_page)
     .getMany()
 
   return {
-    from: skip <= count ? skip + 1 : null,
-    to: (count > skip + per_page) ? skip + per_page : count,
+    from: skip <= total ? skip + 1 : null,
+    to: (total > skip + per_page) ? skip + per_page : total,
     per_page,
-    total: count,
+    total,
     current_page: page,
     prev_page: page > 1 ? (page - 1) : null,
-    next_page: count > (skip + per_page) ? page + 1 : null,
+    next_page: total > (skip + per_page) ? page + 1 : null,
     last_page,
     data
   }
