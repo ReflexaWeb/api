@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { DataSource } from 'typeorm'
 
 const dir = process.env.NODE_ENV === 'dev' ? 'src' : 'dist'
