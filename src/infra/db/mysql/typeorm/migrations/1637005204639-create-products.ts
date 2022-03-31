@@ -9,8 +9,10 @@ export class createProducts1637005204639 implements MigrationInterface {
           columns: [
             {
               name: 'id',
-              type: 'numeric',
-              isPrimary: true
+              type: 'integer',
+              isPrimary: true,
+              isGenerated: true,
+              generationStrategy: 'increment'
             },
             {
               name: 'name',

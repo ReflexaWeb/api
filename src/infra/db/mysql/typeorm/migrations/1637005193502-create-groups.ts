@@ -9,8 +9,10 @@ export class createGroups1637005193502 implements MigrationInterface {
           columns: [
             {
               name: 'id',
-              type: 'numeric',
-              isPrimary: true
+              type: 'integer',
+              isPrimary: true,
+              isGenerated: true,
+              generationStrategy: 'increment'
             },
             {
               name: 'name',
