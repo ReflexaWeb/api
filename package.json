@@ -15,6 +15,7 @@
     "test:staged": "npm t -- --findRelatedTests",
     "test:cov": "npm t -- --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/infra/db/mysql/mysql-connection.ts",
     "prepare": "husky install",
     "up": "docker-compose up -d"
   },
