@@ -24,7 +24,7 @@ describe('GetProductByGroupCodeController', () => {
   })
 
   beforeEach(() => {
-    jest.clearAllMocks()
+
   })
 
   beforeEach(() => {

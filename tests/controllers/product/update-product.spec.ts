@@ -23,8 +23,6 @@ describe('UpdateProductController', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
-
     req.body = {}
     req.params = {}
   })

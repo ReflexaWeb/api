@@ -11,8 +11,8 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
   moduleNameMapper: {
-    '@/tests/(.+)': '<rootDir>/tests/$1',
-    '@/(.+)': '<rootDir>/src/$1'
+    '^@/tests/(.*)$': '<rootDir>/tests/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   testMatch: ['**/*.spec.ts'],
   roots: [

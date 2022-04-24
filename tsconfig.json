@@ -10,10 +10,10 @@
     "module": "commonjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"],
-      "@/tests/*": ["../tests/*"]
+      "@/*": ["src/*"],
+      "@/tests/*": ["tests/*"]
     },
     "strict": true,
     "emitDecoratorMetadata": true,

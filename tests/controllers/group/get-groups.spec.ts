@@ -23,7 +23,7 @@ describe('GetGroupsController', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+
   })
 
   beforeEach(() => {

@@ -23,8 +23,6 @@ describe('UpdateGroupController', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
-
     req.body = {}
     req.params = {}
   })

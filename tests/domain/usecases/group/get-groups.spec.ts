@@ -1,5 +1,5 @@
-import { GetAllGroup } from '@/domain/contracts/repos'
 import { GetGroupsUsecase } from '@/domain/usecases/group'
+import { GetAllGroup } from '@/domain/contracts/repos'
 import { groupData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'

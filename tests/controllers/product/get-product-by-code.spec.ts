@@ -24,7 +24,7 @@ describe('GetProductByCodeController', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+
   })
 
   beforeEach(() => {

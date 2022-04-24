@@ -23,7 +23,6 @@ describe('CreateGroupController', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
     req.body = {}
   })
 
