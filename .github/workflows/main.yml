@@ -38,15 +38,15 @@ jobs:
           source: "., !node_modules"
           target: "~/www/api"
         
-      # - name: Deploy
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     port: ${{ secrets.SSH_PORT }}
-      #     key: ${{ secrets.SSH_KEY }}
-      #     script: |
-      #       cd ~/www/api
-      #       npm run migration:run
-      #       pm2 restart api
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/www/api
+            npm run migration:run
+            pm2 restart api
 
