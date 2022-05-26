@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     
   workflow_dispatch:
 
@@ -33,9 +33,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "., !node_modules"
-          target: "~/app/reflexa-api"
+          target: "~/www/api"
 
       - name: Update API
         uses: appleboy/ssh-action@master
@@ -44,8 +43,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd ~/app/reflexa-api
+            cd ~/www/api
             npm run migration:run
             pm2 restart api
