@@ -1,4 +1,4 @@
-name: CI
+name: Deploy
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
+          cache: 'npm'
           
       - name: Install dependencies
         run: npm i
@@ -32,11 +33,12 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-          ARGS: '--exclude="node_modules/"'
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "dist/"
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
-          REMOTE_PORT: ${{ secrets.SSH_PORT }}
           TARGET: "~/www/api/"
+          EXCLUDE: "/dist/, /node_modules/"
 
       # - name: Post Deploy
       #   uses: appleboy/ssh-action@master
