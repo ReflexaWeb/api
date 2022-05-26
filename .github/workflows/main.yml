@@ -36,7 +36,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
-          SOURCE: "dist/"
+          SOURCE: "../dist/"
           TARGET: "~/www/api/"
 
       # - name: Post Deploy
