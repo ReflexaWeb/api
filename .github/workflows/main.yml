@@ -30,10 +30,10 @@ jobs:
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
-            SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-            SOURCE: "dist"
             REMOTE_HOST: ${{ secrets.SSH_HOST }}
             REMOTE_USER: ${{ secrets.SSH_USER }}
             REMOTE_PORT: ${{ secrets.SSH_PORT }}
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+            SOURCE: "dist"
             TARGET: "~/www/api"
 
