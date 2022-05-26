@@ -2,7 +2,6 @@
   "name": "reflexa-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "author": "Yan Soares",
   "scripts": {
     "start": "npm run build && node -r dotenv/config dist/main",
