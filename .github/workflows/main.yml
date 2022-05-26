@@ -32,12 +32,22 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-          ARGS: >-  
-            --rltgoDzvO
-            --exclude="node_modules/"
+          ARGS: '--exclude="node_modules/"'
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           SOURCE: "."
           TARGET: "~/www/api/"
+
+      # - name: Post Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script: |
+      #       cd ~/www/api
+      #       npm run migration:run
+      #       pm2 restart api
 
