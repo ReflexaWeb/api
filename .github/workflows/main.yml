@@ -38,4 +38,5 @@ jobs:
           REMOTE_PORT: ${{ secrets.SSH_PORT }}
           SOURCE: "."
           TARGET: "~/www/api/"
+          EXCLUDE: "/node_modules/"
 
