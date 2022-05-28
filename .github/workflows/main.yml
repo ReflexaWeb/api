@@ -35,9 +35,9 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           source: "., !node_modules"
-          target: "~/www/api"
+          target: ${{ secrets.SSH_TARGET }}
 
-      - name: Update API
+      - name: Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -46,7 +46,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.SSH_TARGET }}
-            npm i
             npm run migration:run
             pm2 restart api
 
