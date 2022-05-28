@@ -41,7 +41,7 @@ jobs:
 
       - name: Deploy
         run: |
-            cd ${{ secrets.SSH_TARGET }}
+            cd /home/ubuntu/www/api
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             npm i
