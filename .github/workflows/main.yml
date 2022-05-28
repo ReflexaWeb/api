@@ -28,7 +28,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy files
+      - name: Copy files & deploy
         uses: burnett01/rsync-deployments@5.2
         with:
           switches: -avzr --delete --exclude="node_modules/"
@@ -38,13 +38,20 @@ jobs:
           remote_host: ${{ secrets.SSH_HOST }}
           remote_port: ${{ secrets.SSH_PORT }}
           remote_key: ${{ secrets.SSH_KEY }}
-
-      - name: Deploy
-        run: |
-            cd /home/ubuntu/www/api
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
+          rsh: |
+            echo ${{ secrets.SSH_TARGET }}
+            cd ${{ secrets.SSH_TARGET }}
             npm i
             npm run migration:run
             pm2 restart api
+
+      # - name: Deploy
+      #   run: |
+      #       echo ${{ secrets.SSH_TARGET }}
+      #       cd ${{ secrets.SSH_TARGET }}
+      #       export NVM_DIR=~/.nvm
+      #       source ~/.nvm/nvm.sh
+      #       npm i
+      #       npm run migration:run
+      #       pm2 restart api
 
