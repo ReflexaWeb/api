@@ -38,9 +38,7 @@ jobs:
           remote_host: ${{ secrets.SSH_HOST }}
           remote_port: ${{ secrets.SSH_PORT }}
           remote_key: ${{ secrets.SSH_KEY }}
-          rsh: |
-            npm run migration:run
-            pm2 restart api
+          rsh: /usr/local/bin/pm2 restart api
 
       # - name: Deploy
       #   run: |
