@@ -28,23 +28,45 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Copy files
-        uses: burnett01/rsync-deployments@5.2
+      - uses: appleboy/scp-action@master
         with:
-          switches: -avzr --delete --exclude="node_modules/"
-          path: ./
-          remote_path: ${{ secrets.SSH_TARGET }}
-          remote_user: ${{ secrets.SSH_USER }}
-          remote_host: ${{ secrets.SSH_HOST }}
-          remote_port: ${{ secrets.SSH_PORT }}
-          remote_key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "., !node_modules"
+          target: "~/www/api"
 
-      - name: Deploy
-        run: |
-            cd "${{ secrets.SSH_TARGET }}"
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
+      - name: Update API
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/www/api
             npm i
             npm run migration:run
             pm2 restart api
+
+      # - name: Copy files
+      #   uses: burnett01/rsync-deployments@5.2
+      #   with:
+      #     switches: -avzr --delete --exclude="node_modules/"
+      #     path: ./
+      #     remote_path: ${{ secrets.SSH_TARGET }}
+      #     remote_user: ${{ secrets.SSH_USER }}
+      #     remote_host: ${{ secrets.SSH_HOST }}
+      #     remote_port: ${{ secrets.SSH_PORT }}
+      #     remote_key: ${{ secrets.SSH_KEY }}
+
+      # - name: Deploy
+      #   run: |
+      #       cd "${{ secrets.SSH_TARGET }}"
+      #       export NVM_DIR=~/.nvm
+      #       source ~/.nvm/nvm.sh
+      #       npm i
+      #       npm run migration:run
+      #       pm2 restart api
 
