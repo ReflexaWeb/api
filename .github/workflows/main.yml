@@ -40,8 +40,5 @@ jobs:
           remote_key: ${{ secrets.SSH_KEY }}
 
       - name: Deploy
-        run: |
-          cd ${{ secrets.SSH_TARGET }}
-          npm run migration:run
-          pm2 restart api
+        run: cd ${{ secrets.SSH_TARGET }} && npm run migration:run && pm2 restart api
 
