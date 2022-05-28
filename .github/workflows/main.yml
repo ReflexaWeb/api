@@ -39,7 +39,6 @@ jobs:
           remote_port: ${{ secrets.SSH_PORT }}
           remote_key: ${{ secrets.SSH_KEY }}
           rsh: |
-            echo ${{ secrets.SSH_TARGET }}
             cd ${{ secrets.SSH_TARGET }}
             npm i
             npm run migration:run
