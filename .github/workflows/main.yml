@@ -41,8 +41,8 @@ jobs:
 
       - name: Deploy
         run: >
-            cd ${{ secrets.SSH_TARGET }} \
-            npm i \
-            npm run migration:run \
+            cd ${{ secrets.SSH_TARGET }}
+            npm i
+            npm run migration:run
             /usr/local/bin/pm2 restart api
 
