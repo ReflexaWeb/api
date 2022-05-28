@@ -41,8 +41,7 @@ jobs:
 
       - name: Deploy
         run: |
-            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
-            cd ${{ secrets.SSH_TARGET }}
+            cd "${{ secrets.SSH_TARGET }}"
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             npm i
