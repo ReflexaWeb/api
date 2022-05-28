@@ -41,5 +41,5 @@ jobs:
             cd ${{ secrets.SSH_TARGET }} \
             npm i \
             npm run migration:run \
-            pm2 restart api
+            /usr/local/bin/pm2 restart api
 
