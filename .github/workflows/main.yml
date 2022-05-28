@@ -40,11 +40,11 @@ jobs:
           remote_key: ${{ secrets.SSH_KEY }}
 
       - name: Deploy
-        run: >
-            cd ${{ secrets.SSH_TARGET }} \
-            export NVM_DIR=~/.nvm \
-            source ~/.nvm/nvm.sh \
-            npm i \
-            npm run migration:run \
+        run: |
+            cd ${{ secrets.SSH_TARGET }}
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            npm i
+            npm run migration:run
             pm2 restart api
 
