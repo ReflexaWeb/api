@@ -45,7 +45,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/www/api
+            cd ${{ secrets.SSH_TARGET }}
             npm i
             npm run migration:run
             pm2 restart api
