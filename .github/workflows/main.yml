@@ -49,23 +49,3 @@ jobs:
             npm run migration:run
             pm2 restart api
 
-      # - name: Copy files
-      #   uses: burnett01/rsync-deployments@5.2
-      #   with:
-      #     switches: -avzr --delete --exclude="node_modules/"
-      #     path: ./
-      #     remote_path: ${{ secrets.SSH_TARGET }}
-      #     remote_user: ${{ secrets.SSH_USER }}
-      #     remote_host: ${{ secrets.SSH_HOST }}
-      #     remote_port: ${{ secrets.SSH_PORT }}
-      #     remote_key: ${{ secrets.SSH_KEY }}
-
-      # - name: Deploy
-      #   run: |
-      #       cd "${{ secrets.SSH_TARGET }}"
-      #       export NVM_DIR=~/.nvm
-      #       source ~/.nvm/nvm.sh
-      #       npm i
-      #       npm run migration:run
-      #       pm2 restart api
-
