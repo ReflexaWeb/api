@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
 
-export const cors = (request: Request, response: Response, next: NextFunction): void => {
+export const cors = (_: Request, response: Response, next: NextFunction): void => {
   response.set('access-control-allow-origin', 'https://www.reflexa.com.br/')
-  response.set('access-control-allow-methods', '*')
-  response.set('access-control-allow-headers', '*')
+  // response.set('Access-Control-Allow-Origin', 'http://localhost:3000/')
+  response.set('Access-Control-Allow-Methods', 'GET')
   next()
 }

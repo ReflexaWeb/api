@@ -5,6 +5,7 @@ import { Express, Router, json } from 'express'
 import { readdirSync } from 'fs'
 import { join, resolve } from 'path'
 import cors from 'cors'
+// import { cors } from './cors'
 import { serve, setup } from 'swagger-ui-express'
 import YAML from 'yamljs'
 
@@ -17,7 +18,7 @@ export const setupRoutes = (app: Express): void => {
 
   const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
 
-  app.use(cors())
+  app.use(cors({ origin: 'https://www.reflexa.com.br' }))
   app.use(json())
   app.use(pagination)
   app.use(limiter)
