@@ -4,7 +4,7 @@ const ONE_MINUTE = 1 * 60 * 1000
 
 export const limiter = rateLimit({
   windowMs: ONE_MINUTE,
-  max: 20,
+  max: 10,
   standardHeaders: true,
   legacyHeaders: false
 })
