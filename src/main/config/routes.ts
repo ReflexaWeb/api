@@ -17,7 +17,7 @@ export const setupRoutes = (app: Express): void => {
 
   const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
 
-  app.use(cors({ origin: 'https://www.reflexa.com.br' }))
+  app.use(cors({ origin: 'https://www.reflexa.com.br', methods: ['GET', 'POST', 'PUT'] }))
   app.use(json())
   app.use(pagination)
   app.use(limiter)
