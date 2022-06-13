@@ -1,4 +1,5 @@
 import { pagination } from '@/utils'
+import { limiter } from '@/main/config/rate-limiter'
 
 import { Express, Router, json } from 'express'
 import { readdirSync } from 'fs'
@@ -22,6 +23,7 @@ export const setupRoutes = (app: Express): void => {
   }))
   app.use(json())
   app.use(pagination)
+  app.use(limiter)
   app.use('/v1', router)
   app.use('/docs', serve, setup(swaggerDocument))
 }
