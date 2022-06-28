@@ -14,6 +14,7 @@
     "test:staged": "npm t -- --findRelatedTests",
     "test:cov": "npm t -- --coverage",
     "typeorm": "typeorm-ts-node-commonjs",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d ./src/infra/db/mysql/mysql-connection.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/infra/db/mysql/mysql-connection.ts",
     "migration:create": "sh -c 'typeorm-ts-node-commonjs migration:create ./src/infra/db/mysql/typeorm/migrations/$0'",
     "prepare": "husky install",

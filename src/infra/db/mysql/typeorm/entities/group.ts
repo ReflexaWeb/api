@@ -17,6 +17,9 @@ export class GroupMySQL {
   @Column({ nullable: true })
   updated_at?: Date
 
+  @Column()
+  active!: boolean
+
   constructor () {
     this.created_at = new Date()
   }

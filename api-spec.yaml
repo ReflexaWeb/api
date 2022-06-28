@@ -65,8 +65,6 @@ paths:
       responses:
         201:
           description: Successful operation
-        400:
-          description: Unauthorized
         422:
           description: Not Found
         500:
@@ -99,15 +97,13 @@ paths:
         - $ref: "#/parameters/group_code"
         - in: "body"
           name: "body"
-          description: "Criar novo produto"
+          description: "Atualizar grupo"
           required: true
           schema:
-            $ref: "#/definitions/PostGroupPayload"
+            $ref: "#/definitions/PutGroupPayload"
       responses:
         201:
           description: Successful operation
-        400:
-          description: Unauthorized
         404:
           description: Not Found
         500:
@@ -131,8 +127,6 @@ paths:
       responses:
         201:
           description: Successful operation
-        400:
-          description: Unauthorized
         422:
           description: Not Found
         500:
@@ -196,8 +190,6 @@ paths:
       responses:
         201:
           description: Successful operation
-        400:
-          description: Unauthorized
         404:
           description: Not Found
         500:
@@ -323,6 +315,18 @@ definitions:
         type: string
         example: '001'
         description: 'Código do grupo'
+  PutGroupPayload:
+    type: object
+    required:
+    properties:
+      name:
+        type: string
+        description: 'Nome do grupo'
+        example: 'Grupo 1'
+      active:
+        type: boolean
+        example: true
+        description: 'Status do grupo (ativo ou não)'
   Error:
     type: object
     required:
@@ -340,6 +344,7 @@ definitions:
       - code
       - created_at
       - updated_at
+      - active
     properties:
       id:
         type: number
@@ -359,6 +364,10 @@ definitions:
       updated_at:
         type: string
         example: "2021-11-18 00:00:00"
+      active:
+        type: boolean
+        description: "Status do grupo"
+        example: "1"
   ProductsResponse:
     type: object
     required:

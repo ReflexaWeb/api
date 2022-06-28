@@ -1,7 +1,7 @@
 import { CreateGroupController } from '@/controllers/group'
 import { CreateGroup, GetGroupByCode } from '@/domain/contracts/repos'
 import { RequestError, RequiredFieldError } from '@/errors'
-import { groupData } from '@/tests/domain/mocks'
+import { mockGroup } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
@@ -28,7 +28,7 @@ describe('CreateGroupController', () => {
 
   beforeEach(() => {
     sut = new CreateGroupController(groupRepo)
-    req.body = { ...groupData }
+    req.body = { ...mockGroup }
   })
 
   it('should return 201', async () => {
@@ -44,7 +44,7 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, mockGroup)
     expect(res.status).toHaveBeenNthCalledWith(1, 422)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error.message })
   })
@@ -55,7 +55,7 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, mockGroup)
     expect(res.status).toHaveBeenNthCalledWith(1, 400)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error.errors })
   })
@@ -66,7 +66,7 @@ describe('CreateGroupController', () => {
 
     await sut.handle(req, res)
 
-    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, mockGroup)
     expect(res.status).toHaveBeenNthCalledWith(1, 500)
     expect(res.json).toHaveBeenNthCalledWith(1, { message: error })
   })

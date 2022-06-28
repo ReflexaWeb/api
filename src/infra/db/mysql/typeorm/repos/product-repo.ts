@@ -24,29 +24,20 @@ export class ProductRepository implements GetProductByCode, UpdateProduct, GetAl
     return await this.productRepository.findOneBy({ code })
   }
 
-  async update (code: string, updatedData: ProductData): Promise<void> {
-    const product = await this.productRepository.findOneBy({ code })
+  async update (code: string, input: ProductData): Promise<void> {
+    const product = await this.getProductByCode(code)
     if (!product) throw new RequestError(`Produto de código ${code} não encontrado.`)
     await this.productRepository.update({ code }, {
-      name: updatedData.name,
-      reference: updatedData?.reference ?? undefined,
-      unity: updatedData?.unity ?? undefined,
-      fraction: updatedData?.fraction ?? undefined,
-      product_url: updatedData?.product_url ?? undefined,
-      active: updatedData?.active ?? true,
-      unity_reference: updatedData.unity_reference ?? undefined,
-      fraction_reference: updatedData.fraction_reference ?? undefined,
-      group_code: updatedData.group_code,
+      ...input,
+      code: product.code,
+      active: input.active,
       updated_at: new Date()
     })
   }
 
   async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
     return await this.productRepository.find({
-      where: {
-        group_code,
-        active: true
-      }
+      where: { group_code }
     })
   }
 

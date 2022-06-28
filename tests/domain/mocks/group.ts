@@ -1,6 +1,7 @@
 import { Group } from '@/domain/entities'
 
-export const groupData: Group = {
+export const mockGroup: Group = {
   name: 'any_name',
-  code: 'any_code'
+  code: 'any_code',
+  active: true
 }

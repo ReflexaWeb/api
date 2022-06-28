@@ -1,6 +1,6 @@
 import { UpdateGroupController } from '@/controllers/group'
 import { GetGroupByCode, UpdateGroup } from '@/domain/contracts/repos'
-import { groupData } from '@/tests/domain/mocks'
+import { mockGroup } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 import { Request, Response } from 'express'
@@ -30,8 +30,8 @@ describe('UpdateGroupController', () => {
   beforeEach(() => {
     sut = new UpdateGroupController(groupRepo)
 
-    req.body = { ...groupData }
-    req.params = { code: groupData.code }
+    req.body = { ...mockGroup }
+    req.params = { code: mockGroup.code }
   })
 
   it('should return 200', async () => {

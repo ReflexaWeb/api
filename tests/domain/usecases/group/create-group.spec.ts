@@ -1,7 +1,7 @@
 import { CreateGroup, GetGroupByCode } from '@/domain/contracts/repos'
 import { CreateGroupUsecase } from '@/domain/usecases/group'
 import { RequestError, RequiredFieldError } from '@/errors'
-import { groupData } from '@/tests/domain/mocks'
+import { mockGroup } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
@@ -11,7 +11,7 @@ describe('CreateGroupUsecase', () => {
 
   beforeAll(() => {
     groupRepo = mock()
-    groupRepo.getGroupByCode.mockResolvedValue(groupData)
+    groupRepo.getGroupByCode.mockResolvedValue(mockGroup)
   })
 
   beforeEach(() => {
@@ -21,16 +21,16 @@ describe('CreateGroupUsecase', () => {
   it('should be able to create a new group with all data', async () => {
     groupRepo.getGroupByCode.mockResolvedValueOnce(null)
 
-    await sut.create(groupData)
+    await sut.create(mockGroup)
 
-    expect(groupRepo.create).toHaveBeenNthCalledWith(1, groupData)
+    expect(groupRepo.create).toHaveBeenNthCalledWith(1, mockGroup)
   })
 
   it('should not be able to create a new group if given code already exists', async () => {
-    const error = new RequestError(`Grupo de código ${groupData.code} encontrado.`)
+    const error = new RequestError(`Grupo de código ${mockGroup.code} encontrado.`)
     groupRepo.create.mockRejectedValueOnce(error)
 
-    const promise = sut.create(groupData)
+    const promise = sut.create(mockGroup)
 
     await expect(promise).rejects.toThrow(error)
   })
@@ -40,9 +40,9 @@ describe('CreateGroupUsecase', () => {
     const error = new RequiredFieldError(errorsThatShouldBeGenerated)
     groupRepo.create.mockRejectedValueOnce(error)
 
-    const invalidgroupData = { ...groupData, name: '', code: '' }
+    const invalidmockGroup = { ...mockGroup, name: '', code: '' }
 
-    const promise = sut.create(invalidgroupData)
+    const promise = sut.create(invalidmockGroup)
     await expect(promise).rejects.toStrictEqual(error)
   })
 })

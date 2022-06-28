@@ -1,6 +1,6 @@
 import { GetGroupsUsecase } from '@/domain/usecases/group'
 import { GetAllGroup } from '@/domain/contracts/repos'
-import { groupData } from '@/tests/domain/mocks'
+import { mockGroup } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
@@ -17,11 +17,11 @@ describe('GetGroupsUsecase', () => {
   })
 
   it('should be able return all groups', async () => {
-    groupRepo.getAllGroups.mockResolvedValue([groupData])
+    groupRepo.getAllGroups.mockResolvedValue([mockGroup])
 
     const response = await sut.getAllGroups()
 
-    expect(response).toStrictEqual([groupData])
+    expect(response).toStrictEqual([mockGroup])
     expect(groupRepo.getAllGroups).toHaveBeenCalledTimes(1)
   })
 })

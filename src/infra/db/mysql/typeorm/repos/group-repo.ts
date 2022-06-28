@@ -18,9 +18,8 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
 
   async getAllGroups (): Promise<GetAllGroup.Output> {
     return await this.groupRepository.find({
-      order: {
-        name: 'ASC'
-      }
+      where: { active: true },
+      order: { name: 'ASC' }
     })
   }
 
@@ -28,11 +27,12 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
     return await this.groupRepository.findOneBy({ code })
   }
 
-  async update (code: string, updatedData: GroupData): Promise<void> {
+  async update (code: string, input: GroupData): Promise<void> {
     const group = await this.groupRepository.findOneBy({ code })
     if (!group) throw new RequestError(`Grupo de código ${code} não encontrado.`)
     await this.groupRepository.update({ code }, {
-      name: updatedData.name,
+      name: input.name,
+      active: input.active,
       updated_at: new Date()
     })
   }

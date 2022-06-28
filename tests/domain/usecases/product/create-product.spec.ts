@@ -1,7 +1,7 @@
 import { CreateProduct, GetGroupByCode, GetProductByCode } from '@/domain/contracts/repos'
 import { CreateProductUsecase } from '@/domain/usecases/product'
 import { RequestError, RequiredFieldError } from '@/errors'
-import { groupData, productData } from '@/tests/domain/mocks'
+import { mockGroup, productData } from '@/tests/domain/mocks'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
@@ -22,7 +22,7 @@ describe('CreateProductUsecase', () => {
 
   it('should be able to create a new product with all data', async () => {
     productRepo.getProductByCode.mockResolvedValue(null)
-    groupRepo.getGroupByCode.mockResolvedValue(groupData)
+    groupRepo.getGroupByCode.mockResolvedValue(mockGroup)
 
     await sut.create(productData)
 
