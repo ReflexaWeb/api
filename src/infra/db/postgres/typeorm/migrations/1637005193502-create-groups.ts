@@ -24,6 +24,11 @@ export class createGroups1637005193502 implements MigrationInterface {
               isUnique: true
             },
             {
+              name: 'active',
+              type: 'boolean',
+              default: true
+            },
+            {
               name: 'created_at',
               type: 'timestamp',
               default: 'now()'

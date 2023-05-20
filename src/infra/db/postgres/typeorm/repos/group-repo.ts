@@ -1,7 +1,7 @@
 import { CreateGroup, GetAllGroup, GetGroupByCode, UpdateGroup } from '@/domain/contracts/repos'
 import { Group, GroupData } from '@/domain/entities'
 import { RequestError } from '@/errors'
-import { GroupMySQL, mysqlSource } from '@/infra/db/mysql'
+import { GroupMySQL, pgSource } from '@/infra/db/postgres'
 
 import { Repository } from 'typeorm'
 
@@ -9,18 +9,23 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
   private readonly groupRepository: Repository<GroupMySQL>
 
   constructor () {
-    this.groupRepository = mysqlSource.getRepository(GroupMySQL)
+    this.groupRepository = pgSource.getRepository(GroupMySQL)
   }
 
   async create (group: Group): Promise<void> {
     await this.groupRepository.save(group)
   }
 
-  async getAllGroups (): Promise<GetAllGroup.Output> {
-    return await this.groupRepository.find({
-      where: { active: true },
-      order: { name: 'ASC' }
-    })
+  async getAllGroups (filters?: GetAllGroup.Filters): Promise<GetAllGroup.Output> {
+    const queryBuilder = this.groupRepository.createQueryBuilder('groups')
+
+    if (filters?.status) {
+      queryBuilder.andWhere('groups.active = :status', { status: filters.status })
+    }
+
+    queryBuilder.orderBy('groups.name', 'ASC')
+
+    return queryBuilder.getMany()
   }
 
   async getGroupByCode (code: string): Promise<GetGroupByCode.Output> {

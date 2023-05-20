@@ -1,12 +1,11 @@
+import { join } from 'node:path'
+import { readdirSync } from 'node:fs'
+
 import { pagination } from '@/utils'
 import { limiter } from '@/main/config/rate-limiter'
 
-import { Express, Router, json } from 'express'
-import { readdirSync } from 'fs'
-import { join, resolve } from 'path'
+import express, { Express, Router, json } from 'express'
 import cors from 'cors'
-import { serve, setup } from 'swagger-ui-express'
-import YAML from 'yamljs'
 
 export const setupRoutes = (app: Express): void => {
   const router = Router()
@@ -15,7 +14,7 @@ export const setupRoutes = (app: Express): void => {
     .filter(file => !file.endsWith('.map'))
     .map(async file => (await import(`../routes/${file}`)).default(router))
 
-  const swaggerDocument = YAML.load(resolve(__dirname, '../../../api-spec.yaml'))
+  const docFile = express.static(join(__dirname, '..', '..', '..', 'docs'))
 
   app.use(cors({
     origin: 'https://www.reflexa.com.br',
@@ -25,5 +24,5 @@ export const setupRoutes = (app: Express): void => {
   app.use(pagination)
   app.use(limiter)
   app.use('/v1', router)
-  app.use('/docs', serve, setup(swaggerDocument))
+  app.use('/docs', docFile)
 }

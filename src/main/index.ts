@@ -2,8 +2,8 @@ import 'reflect-metadata'
 import './config/module-alias'
 
 import { app } from '@/main/config/app'
-import { mysqlSource } from '@/infra/db/mysql/mysql-connection'
+import { pgSource } from '@/infra/db/postgres/pg-connection'
 
-mysqlSource.initialize()
+pgSource.initialize()
   .then(() => app.listen(3333, () => console.log('Server running!')))
   .catch(console.error)

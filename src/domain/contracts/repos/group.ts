@@ -17,10 +17,11 @@ export namespace GetGroupByCode {
 }
 
 export interface GetAllGroup {
-  getAllGroups: () => Promise<GetAllGroup.Output>
+  getAllGroups: (filters?: GetAllGroup.Filters) => Promise<GetAllGroup.Output>
 }
 
 export namespace GetAllGroup {
+  export type Filters = { status?: boolean }
   export type Output = Group[]
 }
 

@@ -1,6 +1,6 @@
 import { GetProductsController } from '@/controllers/product'
 import { GetProductsUsecase } from '@/domain/usecases/product'
-import { ProductRepository } from '@/infra/db/mysql/typeorm/repos'
+import { ProductRepository } from '@/infra/db/postgres/typeorm/repos'
 
 export const makeGetProductsController = (): GetProductsController => {
   const productRepo = new ProductRepository()

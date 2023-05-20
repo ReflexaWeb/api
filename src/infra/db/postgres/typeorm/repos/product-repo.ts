@@ -1,7 +1,7 @@
 import { GetAllProduct, GetProductByCode, GetProductsByGroupCode, UpdateProduct } from '@/domain/contracts/repos'
 import { Product, ProductData } from '@/domain/entities'
 import { RequestError } from '@/errors'
-import { ProductMySQL, mysqlSource } from '@/infra/db/mysql'
+import { ProductMySQL, pgSource } from '@/infra/db/postgres'
 
 import { Repository } from 'typeorm'
 
@@ -9,7 +9,7 @@ export class ProductRepository implements GetProductByCode, UpdateProduct, GetAl
   private readonly productRepository: Repository<ProductMySQL>
 
   constructor () {
-    this.productRepository = mysqlSource.getRepository(ProductMySQL)
+    this.productRepository = pgSource.getRepository(ProductMySQL)
   }
 
   async create (product: Product): Promise<void> {
@@ -35,18 +35,18 @@ export class ProductRepository implements GetProductByCode, UpdateProduct, GetAl
     })
   }
 
-  async getProductsByGroupCode (group_code: string): Promise<GetProductsByGroupCode.Output> {
+  async getProductsByGroupCode (groupCode: string): Promise<GetProductsByGroupCode.Output> {
     return await this.productRepository.find({
-      where: { group_code }
+      where: { group_code: groupCode }
     })
   }
 
   private async mountQueryBuilder (filters?: GetAllProduct.Filters): Promise<GetAllProduct.Output> {
     const queryBuilder = this.productRepository.createQueryBuilder('products')
 
-    if (filters?.group_code) {
+    if (filters?.groupCode) {
       queryBuilder.andWhere(
-        'products.group_code = :group_code', { group_code: filters.group_code }
+        'products.group_code = :group_code', { group_code: filters.groupCode }
       )
     }
 
@@ -54,7 +54,10 @@ export class ProductRepository implements GetProductByCode, UpdateProduct, GetAl
       queryBuilder.andWhere('products.name LIKE :name', { name: `%${filters.name}%` })
     }
 
-    queryBuilder.andWhere('products.active = 1')
+    if (filters?.status) {
+      queryBuilder.andWhere('products.active = :status', { status: filters.status })
+    }
+
     queryBuilder.orderBy('products.name', 'ASC')
 
     return queryBuilder.paginate()
