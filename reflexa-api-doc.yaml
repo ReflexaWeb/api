@@ -1,0 +1,438 @@
+swagger: "2.0"
+info:
+  description: "ReflexaWeb - API"
+  version: "1.0.0"
+  title: "ReflexaWeb"
+basePath: "/v1"
+tags:
+  - name: "Products"
+    description: "Products management"
+  - name: "Groups"
+    description: "Groups management"
+schemes:
+  - "http"
+  - "https"
+parameters:
+  code:
+    name: "code"
+    description: "Código do produto"
+    required: true
+    in: "path"
+    type: string
+  group_code:
+    name: "group_code"
+    description: "Código do grupo (obrigatório)"
+    required: true
+    in: "path"
+    type: string
+  status:
+    name: "status"
+    description: "true/false ou 1/0"
+    in: "query"
+    type: string
+  group_code_not_required:
+    name: "group_code"
+    description: "Código do grupo (opcional)"
+    in: "query"
+    type: string
+  name:
+    name: "name"
+    description: "Nome do produto"
+    in: "query"
+    type: string
+  page:
+    name: "page"
+    description: "Página atual"
+    in: "query"
+    type: number
+  per_page:
+    name: "per_page"
+    description: "Quantidade de resultados por página (padrão: 15 registros)"
+    in: "query"
+    type: number
+paths:
+  /groups:
+    post:
+      tags:
+        - "Groups"
+      summary: Criar um novo grupo
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Criar novo produto"
+          required: true
+          schema:
+            $ref: "#/definitions/PostGroupPayload"
+      responses:
+        201:
+          description: Successful operation
+        422:
+          description: Not Found
+        500:
+          description: Internal server error
+    get:
+      tags:
+        - "Groups"
+      summary: "Retorna todos os grupos cadastrados"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/status"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/GroupsResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+  /groups/{group_code}:
+    put:
+      tags:
+        - "Groups"
+      summary: Atualizar um grupo
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/group_code"
+        - in: "body"
+          name: "body"
+          description: "Atualizar grupo"
+          required: true
+          schema:
+            $ref: "#/definitions/PutGroupPayload"
+      responses:
+        201:
+          description: Successful operation
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+  /products:
+    post:
+      tags:
+        - "Products"
+      summary: Criar um novo produto
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Criar novo produto"
+          required: true
+          schema:
+            $ref: "#/definitions/PostProductPayload"
+      responses:
+        201:
+          description: Successful operation
+        422:
+          description: Not Found
+        500:
+          description: Internal server error
+    get:
+      tags:
+        - "Products"
+      summary: "Retorna todos os produtos cadastrados"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/name"
+        - $ref: "#/parameters/group_code_not_required"
+        - $ref: "#/parameters/page"
+        - $ref: "#/parameters/per_page"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ProductsResponse"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+  /products/{code}:
+    get:
+      tags:
+        - "Products"
+      summary: "Retorna um produto específico"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/code"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/ProductsResponse"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+    put:
+      tags:
+        - "Products"
+      summary: Atualizar um produto
+      consumes:
+        - application/json
+      parameters:
+        - $ref: "#/parameters/code"
+        - in: "body"
+          name: "body"
+          description: "Atualizar novo produto"
+          required: true
+          schema:
+            $ref: "#/definitions/PutProductPayloadWithoutCode"
+      responses:
+        201:
+          description: Successful operation
+        404:
+          description: Not Found
+        500:
+          description: Internal server error
+  /products/products-by-group/{group_code}:
+    get:
+      tags:
+        - "Products"
+      summary: "Retorna produtos pelo código do grupo"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/group_code"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/ProductsResponse"
+        404:
+          description: Not found
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  PostProductPayload:
+    type: object
+    required:
+      - name
+      - code
+      - group_code
+    properties:
+      name:
+        type: string
+        description: 'Nome do produto'
+        example: 'Produto 1'
+      code:
+        type: string
+        example: '001'
+        description: 'Código do produto'
+      group_code:
+        type: string
+        example: '001'
+        description: 'Código do grupo que o produto pertence'
+      reference:
+        type: string
+        example: '10 PCT'
+        description: 'Referência do produto'
+      unity:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
+      fraction:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto (se fracionado)'
+      product_url:
+        type: string
+        example: 'https://site.com/url-image.png'
+        description: 'URL da imagem'
+      
+  PutProductPayloadWithoutCode:
+    type: object
+    required:
+      - name
+      - group_code
+    properties:
+      name:
+        type: string
+        description: 'Nome do produto'
+        example: 'Produto 1'
+      group_code:
+        type: string
+        example: '001'
+        description: 'Código do grupo que o produto pertence'
+      reference:
+        type: string
+        example: '10 PCT'
+        description: 'Referência do produto'
+      unity:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
+      fraction:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto se for fracionado'
+      product_url:
+        type: string
+        example: 'https://site.com/url-image.png'
+        description: 'URL da imagem'
+      active:
+        type: boolean
+        example: false
+        description: 'Status do produto'
+  PostGroupPayload:
+    type: object
+    required:
+      - name
+      - code
+    properties:
+      name:
+        type: string
+        description: 'Nome do grupo'
+        example: 'Grupo 1'
+      code:
+        type: string
+        example: '001'
+        description: 'Código do grupo'
+  PutGroupPayload:
+    type: object
+    properties:
+      name:
+        type: string
+        description: 'Nome do grupo'
+        example: 'Grupo 1'
+      active:
+        type: boolean
+        example: true
+        description: 'Status do grupo (ativo ou não)'
+  Error:
+    type: object
+    required:
+      - "message"
+    properties:
+      message:
+        type: "string"
+        description: "Description message of the given error"
+        example: "Unexpected error"
+  GroupsResponse:
+    type: object
+    required:
+      - id
+      - name
+      - code
+      - created_at
+      - updated_at
+      - active
+    properties:
+      id:
+        type: number
+        description: "ID do grupo"
+        example: "1"
+      name:
+        type: string
+        description: "Nome do grupo"
+        example: "Grupo 1"
+      code:
+        type: string
+        description: "Código do grupo"
+        example: "001"
+      created_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      updated_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      active:
+        type: boolean
+        description: "Status do grupo"
+        example: "1"
+  ProductsResponse:
+    type: object
+    required:
+      - id
+      - name
+      - code
+      - reference
+      - unity
+      - fraction
+      - unity_reference
+      - fraction_reference
+      - product_url
+      - group_code
+      - active
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: number
+        description: "ID do produto"
+        example: "1"
+      name:
+        type: string
+        description: "Nome do produto"
+        example: "Produto 1"
+      code:
+        type: string
+        description: "Código do produto"
+      reference:
+        type: string
+        example: '10 PCT'
+        description: 'Referência do produto'
+      unity:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto (em unidades)'
+      unity_reference:
+        type: string
+        example: '1'
+        description: 'Unidade referência do produto'
+      fraction_reference:
+        type: string
+        example: '1'
+        description: 'Fração referência do produto'
+      fraction:
+        type: string
+        example: '1'
+        description: 'Quantidade do produto se for fracionado'
+      group_code:
+        type: string
+        example: '001'
+        description: 'Código do grupo que o produto pertence'
+      active:
+        type: boolean
+        example: true
+        description: 'Status do produto'
+      created_at:
+        type: string
+        example: "2021-11-18 00:00:00"
+      updated_at:
+        type: string
+        example: "2021-11-18 00:00:00"
