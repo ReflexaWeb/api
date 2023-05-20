@@ -19,8 +19,8 @@ export class GroupRepository implements CreateGroup, GetGroupByCode, UpdateGroup
   async getAllGroups (filters?: GetAllGroup.Filters): Promise<GetAllGroup.Output> {
     const queryBuilder = this.groupRepository.createQueryBuilder('groups')
 
-    if (filters?.status) {
-      queryBuilder.andWhere('groups.active = :status', { status: filters.status })
+    if (filters?.active) {
+      queryBuilder.andWhere('groups.active = :active', { active: filters.active })
     }
 
     queryBuilder.orderBy('groups.name', 'ASC')

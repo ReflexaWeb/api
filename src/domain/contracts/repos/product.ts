@@ -27,7 +27,7 @@ export namespace GetAllProduct {
   export type Filters = {
     name?: string
     groupCode?: string
-    status?: boolean
+    active?: boolean
   }
   export type Output = ProductsPaginationResponse
 }

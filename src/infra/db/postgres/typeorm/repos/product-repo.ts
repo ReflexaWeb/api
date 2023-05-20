@@ -54,8 +54,8 @@ export class ProductRepository implements GetProductByCode, UpdateProduct, GetAl
       queryBuilder.andWhere('products.name LIKE :name', { name: `%${filters.name}%` })
     }
 
-    if (filters?.status) {
-      queryBuilder.andWhere('products.active = :status', { status: filters.status })
+    if (filters?.active) {
+      queryBuilder.andWhere('products.active = :active', { active: filters.active })
     }
 
     queryBuilder.orderBy('products.name', 'ASC')

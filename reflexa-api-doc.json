@@ -35,9 +35,9 @@
       "in": "path",
       "type": "string"
     },
-    "status": {
-      "name": "status",
-      "description": "true/false ou 1/0",
+    "active": {
+      "name": "active",
+      "description": "true/false",
       "in": "query",
       "type": "string"
     },
@@ -112,7 +112,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/parameters/status"
+            "$ref": "#/parameters/active"
           }
         ],
         "responses": {
@@ -216,6 +216,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/name"
+          },
+          {
+            "$ref": "#/parameters/active"
           },
           {
             "$ref": "#/parameters/group_code_not_required"

@@ -25,9 +25,9 @@ parameters:
     required: true
     in: "path"
     type: string
-  status:
-    name: "status"
-    description: "true/false ou 1/0"
+  active:
+    name: "active"
+    description: "true/false"
     in: "query"
     type: string
   group_code_not_required:
@@ -81,7 +81,7 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - $ref: "#/parameters/status"
+        - $ref: "#/parameters/active"
       responses:
         200:
           description: Successful operation
@@ -146,6 +146,7 @@ paths:
         - "application/json"
       parameters:
         - $ref: "#/parameters/name"
+        - $ref: "#/parameters/active"
         - $ref: "#/parameters/group_code_not_required"
         - $ref: "#/parameters/page"
         - $ref: "#/parameters/per_page"

@@ -21,7 +21,7 @@ export interface GetAllGroup {
 }
 
 export namespace GetAllGroup {
-  export type Filters = { status?: boolean }
+  export type Filters = { active?: boolean }
   export type Output = Group[]
 }
 
